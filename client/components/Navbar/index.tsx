@@ -20,6 +20,7 @@ function Navbar({user, setUserWall}) {
 	}
 
   const onSubmit = (event) => {
+    
     setUserWall(event.target.value);
   }
 
