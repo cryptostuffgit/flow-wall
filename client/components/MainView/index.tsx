@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { createWall, useWallExists } from '../../utils/transactions';
 import { ToastContainer } from 'react-nextjs-toast';
 import * as fcl from '@onflow/fcl';
+import Wall from '@/components/Wall';
 
 const MainView = ({ user, userAddress }) => {
   const [wallExists, setWallExists] = useState(false);
@@ -13,6 +14,7 @@ const MainView = ({ user, userAddress }) => {
   }, [userAddress]);
 
   const isYou = user.addr === userAddress;
+  const isAdmin = isYou && wallExists;
 
   const createWallCB = useCallback(() => {
     if (user.loggedIn === true) {
@@ -28,7 +30,7 @@ const MainView = ({ user, userAddress }) => {
       <h1 className="heading">
         {isYou && wallExists ? (
           <>Your Wall</>
-        ) : isYou && !wallExists ? (
+        ) : user.addr && isYou && !wallExists ? (
           <>
             <button
               onClick={() => {
@@ -46,6 +48,7 @@ const MainView = ({ user, userAddress }) => {
           <>Search for an Address</>
         )}
       </h1>
+      {wallExists && <Wall address={userAddress} admin={isAdmin} />}
     </div>
   );
 };
