@@ -33,12 +33,13 @@ function Navbar({ user, setUserAddress }) {
   const onClick = async (_event) => {
     try {
       const account = await fcl.account(address);
-      setUserAddress(account.address);
+      setUserAddress(`0x${account.address}`);
     } catch (e: any) {
       console.log(e);
       toast.notify('Invalid account', {
         type: 'error',
       });
+      setUserAddress(user.addr);
     }
   };
 

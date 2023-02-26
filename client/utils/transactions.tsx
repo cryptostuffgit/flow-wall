@@ -1,7 +1,7 @@
 import '../flow/config';
 
 export async function useWallExists(fcl: any, user: any, wall?: string) {
-  if (!user.loggedIn) {
+  if (!user.loggedIn && !wall) {
     return false;
   }
   return await fcl.query({
