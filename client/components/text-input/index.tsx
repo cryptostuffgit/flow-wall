@@ -1,11 +1,16 @@
-import React from "react"
+import { on } from "events";
+import React, { useState } from "react"
 
 
-function TextInput() {
+function TextInput({onClick}) {
+
+    const [text, setText] = useState('')
+
+
     return(
         <div className="make-post">
-            <input className="text-field" placeholder="Anything New?" />
-            <button className="text-button">Post</button>
+            <input onChange={(e) => setText(e.target.value)} className="text-field" placeholder="Anything New?" />
+            <button onClick={() => {onClick(text)}} className="text-button">Post</button>
         </div>
     )
 }
