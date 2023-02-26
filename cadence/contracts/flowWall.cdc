@@ -1,6 +1,7 @@
 pub contract FlowWall {
 
     pub event MessageSent(wall: Address, sender: Address)
+    pub event WallCreated(creator: Address)
 
     pub struct Message {
         pub let sender: Address
@@ -28,6 +29,8 @@ pub contract FlowWall {
             self.address = address
             self.messages = []
             self.banned = []
+
+            emit WallCreated(creator: address)
         }
 
         pub fun sendMessage(sender: AuthAccount, content: String) {
