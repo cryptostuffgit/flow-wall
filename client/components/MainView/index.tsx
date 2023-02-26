@@ -48,7 +48,7 @@ const MainView = ({ user, userAddress }) => {
           <>Search for an Address</>
         )}
       </h1>
-      {wallExists && <Wall address={userAddress} admin={isAdmin} />}
+      {wallExists && <Wall user={user} address={userAddress} admin={isAdmin} />}
     </div>
   );
 };

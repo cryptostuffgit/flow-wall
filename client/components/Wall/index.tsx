@@ -6,35 +6,30 @@ import TextInput from '../text-input';
 type Message = {
   sender: String;
   content: String;
-  timestamp: Number;
+  timestamp: Number | String;
 };
 
-const Wall = ({ address, admin }) => {
+const Wall = ({ user, address, admin }) => {
   const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
     (async () => {
       let fcl_messages = await getWallMessages(fcl, address);
-
-      fcl_messages.push({
-        sender: 'your friend',
-        content: 'fuck test message',
-        timestamp: 0,
-      });
-
       setMessages(fcl_messages);
     })();
   }, [address]);
 
   const postMessage = (mesageText) => {
     postWall(fcl, mesageText, address);
+    const allMessages = [...messages, {sender: user.addr, content: mesageText, timestamp: "now"}]
+    setMessages(allMessages)
   };
 
   return (
     <>
       <div className="wall">
         <div className="writer">
-          <TextInput onClick={postMessage} />
+          {user && <TextInput onClick={postMessage} />}
         </div>
         <div className="messages">
           {messages.map((msg, i) => {
