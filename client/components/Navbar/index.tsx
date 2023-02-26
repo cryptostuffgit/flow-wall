@@ -5,8 +5,7 @@ function Navbar({user}) {
 	const AuthedState = () => {
 		return (
 			<div>
-				<div>Address: {user?.addr ?? "No Address"}</div>
-				<button onClick={fcl.unauthenticate}>Log Out</button>
+				<button className={"authButton"} onClick={fcl.unauthenticate}>Log Out</button>
 			</div>
 		)
 	}
@@ -14,13 +13,16 @@ function Navbar({user}) {
 	const UnauthenticatedState = () => {
 		return (
 			<div>
-				<button onClick={fcl.logIn}>Log In</button>
+				<button className={"authButton"} onClick={fcl.logIn}>Log In</button>
 			</div>
 		)
 	}
 
   return (
     <div className='nav'>
+      <div>
+        Address: {user?.addr ?? "None"}
+      </div>
       <div >
         {user.loggedIn
           ? <AuthedState />
