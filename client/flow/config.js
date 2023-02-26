@@ -1,4 +1,4 @@
-import { config } from "@onflow/fcl";
+import { config } from '@onflow/fcl';
 
 config({
   "accessNode.api": "http://localhost:8888", // Mainnet: "https://rest-mainnet.onflow.org"

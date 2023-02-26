@@ -18,7 +18,7 @@ pub fun main(account: Address): Bool {
   });
 }
 
-export async function getWallMessages(fcl: any, user: any) {
+export async function getWallMessages(fcl: any, wallAddress: any) {
   return await fcl.query({
     cadence: `
     import FlowWall from 0xf3fcd2c1a78f5eee
@@ -30,7 +30,7 @@ export async function getWallMessages(fcl: any, user: any) {
         return wall.messages
     }
     `,
-    args: (arg, t) => [arg(user.addr, t.Address)],
+    args: (arg, t) => [arg(wallAddress, t.Address)],
   });
 }
 
