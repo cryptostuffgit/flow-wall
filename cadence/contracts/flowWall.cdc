@@ -54,9 +54,9 @@ pub contract FlowWall {
 
         pub fun updateWall(owner: AuthAccount, avatar: String, bio: String) {
             pre {
-                self.address != owner.address: "You are not the owner"
-                avatar.length > 255: "Avatar length too big!"
-                bio.length > 255: "Bio length too big!"
+                self.address == owner.address: "You are not the owner"
+                avatar.length < 255: "Avatar length too big!"
+                bio.length < 255: "Bio length too big!"
             }
 
             if avatar != "" {

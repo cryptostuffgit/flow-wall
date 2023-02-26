@@ -64,6 +64,44 @@ transaction {
   console.log(tx);
 }
 
+export async function updateWall(
+  fcl: any,
+  user: any,
+  avatar: String,
+  bio: String,
+) {
+  const txId = await fcl.mutate({
+    cadence: `
+import FlowWall from 0xf3fcd2c1a78f5eee
+
+transaction(avatar: String, bio: String) {
+
+  let authAccount: AuthAccount;
+  let wall: &AnyResource{FlowWall.WallPublic};
+
+  prepare(acct: AuthAccount) {
+    self.authAccount = acct;
+    let wallAccount = getAccount(acct.address);
+    let wall_ref = wallAccount.getCapability<&{FlowWall.WallPublic}>(/public/Wall)
+    let wall = wall_ref.borrow()!
+    self.wall = wall;
+  }
+
+  execute {
+    log(self.wall.updateWall(owner: self.authAccount, avatar: avatar, bio: bio))
+  }
+}`,
+    args: (arg, t) => [arg(bio, t.String), arg(avatar, t.String)],
+    payer: fcl.authz,
+    proposer: fcl.authz,
+    authorizations: [fcl.authz],
+    limit: 50,
+  });
+
+  const tx = await fcl.tx(txId).onceSealed();
+  console.log(tx);
+}
+
 export async function postWall(fcl: any, message: string, address: String) {
   const txId = await fcl.mutate({
     cadence: `
