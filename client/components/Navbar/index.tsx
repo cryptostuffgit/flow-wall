@@ -1,7 +1,8 @@
 import React from 'react'
 import * as fcl from "@onflow/fcl";
+import { useState } from 'react';
 
-function Navbar({user}) {
+function Navbar({user, setUserWall}) {
 	const AuthedState = () => {
 		return (
 			<div>
@@ -18,10 +19,22 @@ function Navbar({user}) {
 		)
 	}
 
+  const onSubmit = (event) => {
+    setUserWall(event.target.value);
+  }
+
   return (
     <div className='nav'>
       <div>
-        Address: {user?.addr ?? "None"}
+        Your Address: {user?.addr ?? "None"}
+      </div>
+      <div>
+        <div className="search">
+            <input type="text" className="searchTerm" placeholder="Enter Address" />
+            <button type="submit" className="searchButton" onSubmit={onSubmit}>
+              Find
+            </button>
+        </div>
       </div>
       <div >
         {user.loggedIn

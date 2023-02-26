@@ -8,12 +8,7 @@
     border-bottom: 2px solid transparent;
     // border-image: linear-gradient(0.25turn, rgba(153, 69, 255, 1), rgba(20, 241, 149, 1));
     border-image-slice: 1;
-
-    .logo{
-        img{
-            width: 150px;
-        }
-    }
+    box-shadow: 0 4px 6px -6px #222;
 
     .authButton{
         background: white;
@@ -28,5 +23,36 @@
     .authButton:hover {
         background: #d3d3d3;
         transition: all .4s ease;
+    }
+
+    .search {
+        width: 100%;
+        position: relative;
+        display: flex;
+    }
+    
+    .searchTerm {
+        width: 100%;
+        border: 3px solid #00B4CC;
+        border-right: none;
+        padding: 5px;
+        height: 30px;
+        border-radius: 5px 0 0 5px;
+        outline: none;
+        color: #9DBFAF;
+    }
+    
+    .searchTerm:focus{
+        color: #00B4CC;
+    }
+    
+    .searchButton {
+        border: 1px solid #00B4CC;
+        background: #00B4CC;
+        text-align: center;
+        color: #fff;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        font-size: 20px;
     }
 }
