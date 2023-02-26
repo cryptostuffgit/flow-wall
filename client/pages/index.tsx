@@ -9,8 +9,13 @@ import "../flow/config";
 
 export default function Home() {
   const [user, setUser] = useState({loggedIn: null, addr: null})
+  const [userWall, setUserWall] = useState<any>(null)
 
   useEffect(() => fcl.currentUser.subscribe(setUser), [])
+  useEffect(() => {
+    setUserWall(user.addr)
+  }, [user])
+
 
   return (
     <div className="layout">
@@ -18,9 +23,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <Navbar user={user} />
+        <Navbar user={user} setUserWall={setUserWall}/>
         <div className={styles.container}>
-          <MainView />
+          <MainView user={user} userWall={userWall}/>
         </div>
       </div>
       <Footer />
