@@ -5,7 +5,6 @@ import {wallExists} from "@/utils/transactions"
 
 const MainView = ({user, userWall}) => {
   useEffect(() => {
-    
   }, [userWall])
 
   return (
