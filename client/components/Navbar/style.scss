@@ -4,7 +4,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #0a0a0a !important;
+    background: green !important;
     border-bottom: 2px solid transparent;
     // border-image: linear-gradient(0.25turn, rgba(153, 69, 255, 1), rgba(20, 241, 149, 1));
     border-image-slice: 1;
@@ -14,5 +14,4 @@
             width: 150px;
         }
     }
-
 }

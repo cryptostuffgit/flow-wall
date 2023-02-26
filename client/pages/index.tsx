@@ -14,7 +14,6 @@ export default function Home() {
 
   return (
     <div className="layout">
-      <canvas id="my-target" className="confetti"></canvas>
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>

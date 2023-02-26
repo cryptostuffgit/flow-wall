@@ -1,5 +1,6 @@
 html,
 body {
+  background-color: #0a0a0a;
   padding: 0;
   margin: 0;
   font-family: "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
@@ -12,24 +13,4 @@ a {
 
 * {
   box-sizing: border-box;
-}
-
-.wallet-adapter-button-trigger {
-  background-color: white !important;
-  color: black !important;
-}
-
-.layout{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background-color: #0a0a0a;
-}
-
-.confetti {
-  top:0;
-  left:0;
-  position: absolute;
-  z-index:999;
-  pointer-events: none;
 }
