@@ -6,18 +6,17 @@ import MainView from '@/components/MainView';
 import { useState, useEffect, useCallback } from 'react';
 import * as fcl from '@onflow/fcl';
 import '../flow/config';
-import { createWall, wallExists } from '../utils/transactions.tsx';
 
 export default function Home() {
   const [user, setUser] = useState({ loggedIn: null, addr: null });
 
   useEffect(() => fcl.currentUser.subscribe(setUser), []);
 
-  const [userWall, setUserWall] = useState<any>(null);
+  const [userAddress, setuserAddress] = useState<any>(null);
 
   useEffect(() => fcl.currentUser.subscribe(setUser), []);
   useEffect(() => {
-    setUserWall(user.addr);
+    setuserAddress(user.addr);
   }, [user]);
 
   return (
@@ -26,9 +25,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <Navbar user={user} setUserWall={setUserWall} />
+        <Navbar user={user} setuserAddress={setuserAddress} />
         <div className={styles.container}>
-          <MainView user={user} userWall={userWall} />
+          <MainView user={user} userAddress={userAddress} />
         </div>
       </div>
       <Footer user={user} fcl={fcl} />

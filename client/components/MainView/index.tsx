@@ -1,14 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { createWall, useWallExists } from '../../utils/transactions.tsx';
+import * as fcl from '@onflow/fcl';
 
-const MainView = ({user, userWall}) => {
-  useEffect(() => {
-    
-  }, [userWall])
+const MainView = ({ user, userAddress }) => {
+  const wallExists = useWallExists(fcl, user, userAddress);
+
+  const isYou = user.addr === userAddress;
+
+  const createWallCB = useCallback(() => {
+    if (user.loggedIn === true) {
+      (async () => {
+        createWall(fcl);
+      })();
+    }
+  }, [user]);
 
   return (
     <div className="main-container">
       <h1 className="heading">
-        {userWall ? <>{userWall}'s Wall</> : <>Search for an Address</>}
+        {isYou && wallExists ? (
+          <>Your Wall</>
+        ) : isYou && !wallExists ? (
+          <>
+            <button
+              onClick={() => {
+                createWallCB();
+              }}
+            >
+              Create Wall
+            </button>
+          </>
+        ) : userAddress ? (
+          <>{userAddress}'s Wall'</>
+        ) : (
+          <>Search for an Address</>
+        )}
       </h1>
     </div>
   );
