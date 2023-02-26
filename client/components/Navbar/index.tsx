@@ -1,8 +1,11 @@
 import React from 'react'
 import * as fcl from "@onflow/fcl";
 import { useState } from 'react';
+import { toast } from 'react-nextjs-toast'
 
 function Navbar({user, setUserWall}) {
+  const [address, setAddress] = useState("")
+
 	const AuthedState = () => {
 		return (
 			<div>
@@ -19,9 +22,19 @@ function Navbar({user, setUserWall}) {
 		)
 	}
 
-  const onSubmit = (event) => {
-    
-    setUserWall(event.target.value);
+  const onChange = (event) => {
+    setAddress(event.target.value)
+  }
+
+  const onClick = async (_event) => {
+    try {
+      const account = await fcl.account(address);
+      setUserWall(account.address);
+    } catch {
+      toast.notify('Invalid account', {
+        type: "error"
+      })
+    }
   }
 
   return (
@@ -31,8 +44,8 @@ function Navbar({user, setUserWall}) {
       </div>
       <div>
         <div className="search">
-            <input type="text" className="searchTerm" placeholder="Enter Address" />
-            <button type="submit" className="searchButton" onSubmit={onSubmit}>
+            <input onChange={onChange} type="text" className="searchTerm" placeholder="Enter Address" />
+            <button onClick={onClick} type="submit" className="searchButton">
               Find
             </button>
         </div>
