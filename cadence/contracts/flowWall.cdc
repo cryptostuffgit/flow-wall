@@ -16,8 +16,28 @@ pub contract FlowWall {
         }
     }
 
-    pub resource interface WallPublic {
+    pub struct WallPublicRead {
+        pub let address: Address
         pub let messages: [Message]
+        pub var avatar: String
+        pub var bio: String
+        pub let banned: [Address]
+
+        init(address: Address, messages: [Message], avatar: String, bio: String, banned: [Address]) {
+          self.address = address
+          self.messages = messages
+          self.avatar = avatar
+          self.bio = bio
+          self.banned = banned
+        }
+    }
+
+    pub resource interface WallPublic {
+        pub let address: Address
+        pub let messages: [Message]
+        pub var avatar: String
+        pub var bio: String
+        pub let banned: [Address]
         pub fun sendMessage(sender: AuthAccount, content: String)
         pub fun updateWall(owner: AuthAccount, avatar: String, bio: String)
     }

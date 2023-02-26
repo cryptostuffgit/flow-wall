@@ -16,7 +16,7 @@ const WallAdmin = ({ user, address, admin }) => {
 
   const editAvatar = useCallback(() => {
     (async () => {
-      const avatar = '';
+      const avatar = 'test avtar';
       await updateWall(fcl, user, avatar, '');
       //
     })();

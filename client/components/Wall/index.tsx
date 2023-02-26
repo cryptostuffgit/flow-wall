@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import * as fcl from '@onflow/fcl';
-import { postWall, getWallMessages } from '../../utils/transactions';
+import { postWall, getWall } from '../../utils/transactions';
 import TextInput from '../TextInput';
 import MessageView from '../Message';
 
@@ -10,12 +10,23 @@ type Message = {
   timestamp: Number | String;
 };
 
+type Wall = {
+  address: String;
+  avatar: String;
+  bio: String;
+  messages: Message[];
+  banned: String[];
+};
+
 const Wall = ({ user, address, admin }) => {
+  const [wall, setWall] = useState<Wall>({});
   const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
     (async () => {
-      let fcl_messages = await getWallMessages(fcl, address);
+      const fcl_wall = await getWall(fcl, address);
+      setWall(fcl_wall);
+      let fcl_messages = fcl_wall.messages;
       fcl_messages = fcl_messages.sort((a, b) => b.timestamp - a.timestamp);
       setMessages(fcl_messages);
     })();
@@ -36,9 +47,9 @@ const Wall = ({ user, address, admin }) => {
       <div className="wall">
         <div className="wall_props">
           <div className="avatar">
-            <img src="https://localhost:3000/public/test.png" />
+            <img src={wall.avatar} />
           </div>
-          <div className="bio">Hey, I'm Alex.</div>
+          <div className="bio">{wall.bio}</div>
         </div>
         <div className="writer">
           {user.addr && <TextInput onClick={postMessage} />}

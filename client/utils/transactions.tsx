@@ -21,16 +21,16 @@ pub fun main(account: Address): Bool {
   });
 }
 
-export async function getWallMessages(fcl: any, wallAddress: any) {
+export async function getWall(fcl: any, wallAddress: any) {
   return await fcl.query({
     cadence: `
     import FlowWall from 0xf3fcd2c1a78f5eee
 
-    pub fun main(account: Address): [FlowWall.Message] {
+    pub fun main(account: Address): FlowWall.WallPublicRead {
         let wallAccount = getAccount(account);
         let wall_ref = wallAccount.getCapability<&{FlowWall.WallPublic}>(/public/Wall)
-        let wall = wall_ref.borrow()!
-        return wall.messages
+        let wall = wall_ref.borrow()!;
+        return FlowWall.WallPublicRead(wall.address, wall.messages, wall.avatar, wall.bio, wall.banned);
     }
     `,
     args: (arg, t) => [arg(wallAddress, t.Address)],
@@ -91,7 +91,7 @@ transaction(avatar: String, bio: String) {
     log(self.wall.updateWall(owner: self.authAccount, avatar: avatar, bio: bio))
   }
 }`,
-    args: (arg, t) => [arg(bio, t.String), arg(avatar, t.String)],
+    args: (arg, t) => [arg(avatar, t.String), arg(bio, t.String)],
     payer: fcl.authz,
     proposer: fcl.authz,
     authorizations: [fcl.authz],
