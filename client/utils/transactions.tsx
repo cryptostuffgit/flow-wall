@@ -1,5 +1,23 @@
 import '../flow/config';
 
+export async function wallExists(fcl: any, user: any) {
+  return await fcl.query({
+    cadence: `
+import FlowWall from 0xf3fcd2c1a78f5eee
+
+pub fun main(account: Address): Bool {
+    let wallAccount = getAccount(account);
+    let wall_ref = wallAccount.getCapability<&{FlowWall.WallPublic}>(/public/Wall)
+    let wall = wall_ref.borrow()
+    if wall == nil {
+        return false
+    }
+    return true
+}`,
+    args: (arg, t) => [arg(user.addr, t.Address)],
+  });
+}
+
 export async function createWall(fcl: any) {
   const txId = await fcl.mutate({
     cadence: `
