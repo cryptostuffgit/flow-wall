@@ -27,7 +27,7 @@ transaction {
   console.log(tx);
 }
 
-export async function postWall(fcl: any, message: string) {
+export async function postWall(fcl: any, message: string, address: String) {
   const txId = await fcl.mutate({
     cadence: `
 import FlowWall from 0xf3fcd2c1a78f5eee
@@ -49,7 +49,7 @@ transaction(address: Address, content: String) {
     log(self.wall.sendMessage(sender: self.authAccount, content: content))
   }
 }`,
-    args: (arg, t) => [arg(message, t.String)],
+    args: (arg, t) => [arg(address, t.Address), arg(message, t.String)],
     payer: fcl.authz,
     proposer: fcl.authz,
     authorizations: [fcl.authz],
