@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import * as fcl from '@onflow/fcl';
-import { getWallMessages } from '../../utils/transactions';
+import { postWall, getWallMessages } from '../../utils/transactions';
+import TextInput from '../text-input';
 
 type Message = {
   sender: String;
@@ -25,12 +26,15 @@ const Wall = ({ address, admin }) => {
     })();
   }, [address]);
 
+  const postMessage = (mesageText) => {
+    postWall(fcl, mesageText, address);
+  };
+
   return (
     <>
       <div className="wall">
         <div className="writer">
-          <textarea />
-          <button>Send</button>
+          <TextInput onClick={postMessage} />
         </div>
         <div className="messages">
           {messages.map((msg, i) => {

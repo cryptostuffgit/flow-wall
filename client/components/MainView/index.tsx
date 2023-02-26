@@ -1,6 +1,4 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { postWall } from '@/utils/transactions';
-import TextInput from '../text-input';
 import { createWall, useWallExists } from '../../utils/transactions';
 import { ToastContainer } from 'react-nextjs-toast';
 import * as fcl from '@onflow/fcl';
@@ -26,10 +24,6 @@ const MainView = ({ user, userAddress }) => {
     }
   }, [user]);
 
-  const postMessage = (mesageText) => {
-    postWall(fcl, mesageText, userWall);
-  };
-
   return (
     <div className="text-container main-container">
       <ToastContainer />
@@ -54,7 +48,6 @@ const MainView = ({ user, userAddress }) => {
           <>Search for an Address</>
         )}
       </h1>
-      <TextInput onClick={postMessage} />
       {wallExists && <Wall address={userAddress} admin={isAdmin} />}
     </div>
   );
