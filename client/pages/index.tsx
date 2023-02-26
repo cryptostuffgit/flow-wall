@@ -28,7 +28,6 @@ export default function Home() {
           <MainView user={user} userAddress={userAddress} />
         </div>
       </div>
-      <Footer user={user} fcl={fcl} />
     </div>
   );
 }

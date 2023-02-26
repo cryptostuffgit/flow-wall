@@ -1,5 +1,14 @@
+@import '../../styles/globals.scss';
+
+.base-styles {
+    padding: 20px;
+    width: 50%;
+    border-radius: 10px;
+    border: 3px solid black;
+}
+
 .iSend{
-    background-color: rgb(55, 140, 231);
+    background-color: $primary;
     color: white;
     display: flex;
     align-items: flex-start;
@@ -7,7 +16,7 @@
 }
 
 .uSend{
-    background-color: rgb(48, 48, 48);
+    background-color: $gray;
     color: white;
     display: flex;
     align-items: flex-start;
@@ -15,6 +24,9 @@
 }
 
 .meta{
+    p {
+        font-size: 10px;
+    }
     display: flex;
     flex-direction: row;
     align-items: flex-start;

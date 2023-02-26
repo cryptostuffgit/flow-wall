@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import * as fcl from '@onflow/fcl';
 import { postWall, getWallMessages } from '../../utils/transactions';
-import TextInput from '../text-input';
+import TextInput from '../TextInput';
 import MessageView from '../Message'
 
 type Message = {
@@ -16,27 +16,30 @@ const Wall = ({ user, address, admin }) => {
   useEffect(() => {
     (async () => {
       let fcl_messages = await getWallMessages(fcl, address);
+      fcl_messages = fcl_messages.sort((a, b) => b.timestamp - a.timestamp);
       setMessages(fcl_messages);
     })();
   }, [address]);
 
   const postMessage = (mesageText) => {
-    postWall(fcl, mesageText, address);
-    const allMessages = [...messages, {sender: user.addr, content: mesageText, timestamp: "now"}]
-    setMessages(allMessages)
+    postWall(fcl, mesageText, address)
+    .then(() => {
+      const allMessages = [{sender: user.addr, content: mesageText, timestamp: "now"}, ...messages]
+      setMessages(allMessages)
+    })
   };
 
   return (
     <>
       <div className="wall">
         <div className="writer">
-          {user && <TextInput onClick={postMessage} />}
+          {user.addr && <TextInput onClick={postMessage} />}
         </div>
         <div className="messages">
           {messages.map((msg, i) => {
             return (
               <div className="message" key={i}>
-                <MessageView user={admin} sender={msg.sender} content={msg.content} timestamp={msg.timestamp} />
+                <MessageView user={user} message={msg} />
               </div>
             );
           })}
