@@ -28,7 +28,7 @@ export default function Home() {
           <MainView user={user} userWall={userWall}/>
         </div>
       </div>
-      <Footer />
+      <Footer user={user} fcl={fcl}/>
     </div>
   );
 }
