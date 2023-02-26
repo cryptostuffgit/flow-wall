@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import * as fcl from '@onflow/fcl';
 import { postWall, getWallMessages } from '../../utils/transactions';
 import TextInput from '../text-input';
+import MessageView from '../Message'
 
 type Message = {
   sender: String;
@@ -40,7 +41,7 @@ const Wall = ({ address, admin }) => {
           {messages.map((msg, i) => {
             return (
               <div className="message" key={i}>
-                {msg.sender}: {msg.content} @ {msg.timestamp}
+                <MessageView user={admin} sender={msg.sender} content={msg.content} timestamp={msg.timestamp} />
               </div>
             );
           })}

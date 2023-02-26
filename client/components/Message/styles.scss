@@ -1,0 +1,22 @@
+.iSend{
+    background-color: rgb(55, 140, 231);
+    color: white;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.uSend{
+    background-color: rgb(48, 48, 48);
+    color: white;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.meta{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    color: rgb(48, 48, 48);
+}
