@@ -9,9 +9,7 @@ import '../flow/config';
 
 export default function Home() {
   const [user, setUser] = useState({ loggedIn: null, addr: null });
-
-  useEffect(() => fcl.currentUser.subscribe(setUser), []);
-
+  
   const [userAddress, setUserAddress] = useState<any>(null);
 
   useEffect(() => fcl.currentUser.subscribe(setUser), []);

@@ -28,12 +28,10 @@ function Navbar({ user, setUserAddress }) {
 
   const onChange = (event) => {
     setAddress(event.target.value);
-    //setUserAddress(event.target.value);
   };
 
   const onClick = async (_event) => {
     try {
-      console.log(address);
       const account = await fcl.account(address);
       setUserAddress(account.address);
     } catch (e: any) {

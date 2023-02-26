@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { createWall, useWallExists } from '../../utils/transactions.tsx';
+import { createWall, useWallExists } from '../../utils/transactions';
 import { ToastContainer } from 'react-nextjs-toast';
 import * as fcl from '@onflow/fcl';
 
 const MainView = ({ user, userAddress }) => {
-  const wallExists = useWallExists(fcl, user, userAddress);
+  // const wallExists = await useWallExists(fcl, user, userAddress);
+  const wallExists = true;
 
   const isYou = user.addr === userAddress;
 
