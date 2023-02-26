@@ -12,11 +12,11 @@ export default function Home() {
 
   useEffect(() => fcl.currentUser.subscribe(setUser), []);
 
-  const [userAddress, setuserAddress] = useState<any>(null);
+  const [userAddress, setUserAddress] = useState<any>(null);
 
   useEffect(() => fcl.currentUser.subscribe(setUser), []);
   useEffect(() => {
-    setuserAddress(user.addr);
+    setUserAddress(user.addr);
   }, [user]);
 
   return (
@@ -25,7 +25,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <Navbar user={user} setuserAddress={setuserAddress} />
+        <Navbar user={user} setUserAddress={setUserAddress} />
         <div className={styles.container}>
           <MainView user={user} userAddress={userAddress} />
         </div>

@@ -1,8 +1,11 @@
 import React from 'react';
 import * as fcl from '@onflow/fcl';
 import { useEffect, useCallback, useState } from 'react';
+import { toast } from 'react-nextjs-toast';
 
 function Navbar({ user, setUserAddress }) {
+  const [address, setAddress] = useState('');
+
   const AuthedState = () => {
     return (
       <div>
@@ -23,28 +26,23 @@ function Navbar({ user, setUserAddress }) {
     );
   };
 
-  const [address, setAddress] = useState('');
-
-  const onChange = useCallback((event) => {
+  const onChange = (event) => {
     setAddress(event.target.value);
-  }, []);
+    //setUserAddress(event.target.value);
+  };
 
-  const onClick = useCallback(
-    (_event) => {
-      (async () => {
-        try {
-          const account = await fcl.account('' + address);
-          setUserAddress(`0x${account.address}`);
-        } catch (e: any) {
-          toast.notify('Invalid account', {
-            type: 'error',
-          });
-          setUserAddress(user.addr);
-        }
-      })();
-    },
-    [address],
-  );
+  const onClick = async (_event) => {
+    try {
+      console.log(address);
+      const account = await fcl.account(address);
+      setUserAddress(account.address);
+    } catch (e: any) {
+      console.log(e);
+      toast.notify('Invalid account', {
+        type: 'error',
+      });
+    }
+  };
 
   return (
     <div className="nav">
@@ -57,7 +55,7 @@ function Navbar({ user, setUserAddress }) {
             className="searchTerm"
             placeholder="Enter Address"
           />
-          <button type="submit" className="searchButton" onClick={onClick}>
+          <button onClick={onClick} type="submit" className="searchButton">
             Find
           </button>
         </div>

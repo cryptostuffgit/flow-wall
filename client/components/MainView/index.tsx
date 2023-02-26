@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { createWall, useWallExists } from '../../utils/transactions.tsx';
+import { ToastContainer } from 'react-nextjs-toast';
 import * as fcl from '@onflow/fcl';
 
 const MainView = ({ user, userAddress }) => {
@@ -23,6 +24,7 @@ const MainView = ({ user, userAddress }) => {
 
   return (
     <div className="main-container">
+      <ToastContainer />
       <h1 className="heading">
         {isYou && wallExists ? (
           <>Your Wall</>
