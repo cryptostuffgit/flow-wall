@@ -41,7 +41,7 @@ const MainView = ({ user, userAddress }) => {
         ) : userAddress && wallExists ? (
           <>{userAddress}'s Wall</>
         ) : userAddress && !wallExists ? (
-          <>{userAddress}'s has no wall!</>
+          <>{userAddress} has no wall!</>
         ) : (
           <>Search for an Address</>
         )}
