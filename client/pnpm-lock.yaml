@@ -10,6 +10,7 @@ specifiers:
   next: 13.2.1
   react: 18.2.0
   react-dom: 18.2.0
+  react-nextjs-toast: ^1.2.5
   sass: ^1.58.3
   typescript: 4.9.5
 
@@ -23,6 +24,7 @@ dependencies:
   next: 13.2.1_wiv434v7erz4aedd5whhdwmpv4
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-nextjs-toast: 1.2.5_biqbaboplfbrettd7655fr4n2y
   sass: 1.58.3
   typescript: 4.9.5
 
@@ -1996,6 +1998,18 @@ packages:
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+    dev: false
+
+  /react-nextjs-toast/1.2.5_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-N79HUrZIbjyi50FD8w2cqi5qBz6QFX+4ZPHo0wT1w1ZZzLjbrqsxL0SH4Xv4TvXXfZyskADxpvg6lKmXyRZeuA==}
+    peerDependencies:
+      prop-types: ^15.6.0
+      react: ^16.0.0
+      react-dom: ^16.0.0
+      styled-jsx: ^3.3.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /react/18.2.0:

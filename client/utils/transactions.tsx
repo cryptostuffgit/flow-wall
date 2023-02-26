@@ -1,6 +1,9 @@
 import '../flow/config';
 
-export async function wallExists(fcl: any, user: any) {
+export async function useWallExists(fcl: any, user: any, wall?: string) {
+  if (!user.loggedIn && !wall) {
+    return false;
+  }
   return await fcl.query({
     cadence: `
 import FlowWall from 0xf3fcd2c1a78f5eee
@@ -14,7 +17,7 @@ pub fun main(account: Address): Bool {
     }
     return true
 }`,
-    args: (arg, t) => [arg(user.addr, t.Address)],
+    args: (arg, t) => [arg(wall ?? user.addr, t.Address)],
   });
 }
 
