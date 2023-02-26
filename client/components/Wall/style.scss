@@ -1,0 +1,9 @@
+.wall{
+    margin-left: 30px;
+    margin-right: 30px;
+    display: flex;
+    flex-direction: column;
+    .writer {
+        margin-bottom: 30px;
+    }
+}
