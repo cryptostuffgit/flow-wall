@@ -32,7 +32,7 @@ const WallAdmin = ({ user, address, admin, needsMigrate }) => {
 
   return (
     <div className="flex">
-      <Icon name="edit" tooltip="Migrate" onClick={migrate} />
+      {needsMigrate && <Icon name="edit" tooltip="Migrate" onClick={migrate} />}
       <Icon name="edit" tooltip="Change Bio" onClick={editBio} />
       <Icon name="avatar" tooltip="Change Avatar" onClick={editAvatar} />
     </div>

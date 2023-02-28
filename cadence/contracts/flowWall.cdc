@@ -1,5 +1,8 @@
 pub contract FlowWall {
 
+    // Bool for wether or not the wall is claimed
+    pub let createdWalls: {Address: Bool}
+    
     init() {
         let map <- create UnclaimedWalls()
         self.account.save(<- map, to: /storage/UnclaimedWalls)
@@ -88,6 +91,16 @@ pub contract FlowWall {
         }
     }
 
+    pub struct CanvasItem {
+        pub let type: String
+        pub let content: String
+
+        init(_type: String, _content: String) {
+            self.type = _type
+            self.content = _content
+        }
+    }
+
     pub struct WallPublicRead {
         pub let address: Address
         pub let messages: [Message]
@@ -110,6 +123,7 @@ pub contract FlowWall {
         pub var avatar: String
         pub var bio: String
         pub let banned: [Address]
+        pub let canvasItems: [CanvasItem]
         pub fun sendMessage(sender: AuthAccount, content: String)
         pub fun updateWall(owner: AuthAccount, avatar: String, bio: String)
         pub fun getHeader(): {String: AnyStruct}
@@ -121,6 +135,7 @@ pub contract FlowWall {
         pub var bio: String
         pub let messages: [Message]
         pub let banned: [Address]
+        pub let canvasItems: [CanvasItem]
 
         init(address: Address, avatar: String, bio: String) {
             self.address = address
@@ -128,6 +143,7 @@ pub contract FlowWall {
             self.bio = bio
             self.messages = []
             self.banned = []
+            self.canvasItems = []
 
             emit WallCreated(creator: address)
         }
@@ -185,6 +201,17 @@ pub contract FlowWall {
                 "bio": self.bio
             }
         }
+
+        pub fun addCanvasItem(type: String, content: String) {
+            pre {
+                type == "text" || type == "image" || type == "gif" : "Type needs to be one of text, image, gif"
+                content.length < 255 : "Content length too big!"
+            }
+            self.canvasItems.append(CanvasItem(
+                _type: type,
+                _content: content
+            ))
+        }
     }
 
     pub fun createWall(authAccount: AuthAccount, map: &AnyResource{FlowWall.UnclaimedWallsInterface}) {
@@ -204,7 +231,4 @@ pub contract FlowWall {
         authAccount.link<&{WallPublic}>(/public/Wall, target: /storage/Wall);
         self.createdWalls[authAccount.address] = true
     }
-
-    // Bool for wether or not the wall is claimed
-    pub let createdWalls: {Address: Bool}
 }
