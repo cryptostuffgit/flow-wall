@@ -75,7 +75,7 @@ function Navbar({ user, setUserAddress, page, setPage }) {
               onKeyUp={onKeyUp}
               type="text"
               className="searchTerm"
-              placeholder="Enter Address"
+              placeholder="Find Wallet"
             />
           </div>
         </div>
