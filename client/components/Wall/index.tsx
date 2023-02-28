@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import * as fcl from '@onflow/fcl';
-import { postWall, getWall } from '../../utils/transactions';
+import { postWall, getWall, useWallExists } from '../../utils/transactions';
 import TextInput from '../TextInput';
 import MessageView from '../Message';
 import WallAdmin from '@/components/WallAdmin';
@@ -20,9 +20,20 @@ type Wall = {
   banned: String[];
 };
 
-const Wall = ({ wallExists, needsMigrate, isYou, user, address, admin }) => {
+const Wall = ({ needsMigrate, user, address }) => {
   const [wall, setWall] = useState<Wall | any>({});
+  const [refresh, causeRefresh] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
+  const [wallExists, setWallExists] = useState([false, false]);
+
+  useEffect(() => {
+    (async () => {
+      setWallExists(await useWallExists(fcl, user, address));
+    })();
+  }, [address, refresh]);
+
+  const isYou = user.addr === address;
+  const admin = isYou && wallExists[0];
 
   useEffect(() => {
     if (wallExists[0]) {
@@ -34,7 +45,7 @@ const Wall = ({ wallExists, needsMigrate, isYou, user, address, admin }) => {
         setMessages(fcl_messages);
       })();
     }
-  }, [address, wallExists]);
+  }, [address, wallExists, refresh]);
 
   const postMessage = (mesageText) => {
     postWall(fcl, mesageText, address).then(() => {
@@ -61,13 +72,31 @@ const Wall = ({ wallExists, needsMigrate, isYou, user, address, admin }) => {
           )}
         </p>
         {user.addr && isYou && !wallExists[0] ? (
-          <CreateWall user={user} address={address} isYou={isYou} />
+          <CreateWall
+            causeRefresh={causeRefresh}
+            refresh={refresh}
+            user={user}
+            address={address}
+            isYou={isYou}
+          />
         ) : user.addr && !isYou && !wallExists[0] ? (
-          <CreateWall user={user} address={address} isYou={isYou} />
+          <CreateWall
+            causeRefresh={causeRefresh}
+            refresh={refresh}
+            user={user}
+            address={address}
+            isYou={isYou}
+          />
         ) : (
           <></>
         )}
-        {wallExists[0] && admin && <WallAdmin needsMigrate={!wallExists[1]} />}
+        {wallExists[0] && admin && (
+          <WallAdmin
+            causeRefresh={causeRefresh}
+            refresh={refresh}
+            needsMigrate={!wallExists[1]}
+          />
+        )}
       </h1>
       {wallExists[0] && (
         <div className="wall">

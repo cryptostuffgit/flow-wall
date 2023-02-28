@@ -5,11 +5,12 @@ import TextInput from '../TextInput';
 import MessageView from '../Message';
 import Icon from '../Icon';
 
-const CreateWall = ({ user, isYou, address }) => {
+const CreateWall = ({ refresh, causeRefresh, user, isYou, address }) => {
   const createWallCB = useCallback(() => {
     if (user.loggedIn === true) {
       (async () => {
-        createWall(fcl);
+        await createWall(fcl);
+        causeRefresh(!refresh);
       })();
     }
   }, [user]);
@@ -17,7 +18,8 @@ const CreateWall = ({ user, isYou, address }) => {
   const createWallOtherCB = useCallback(() => {
     if (user.loggedIn === true) {
       (async () => {
-        createWallOther(fcl, address);
+        await createWallOther(fcl, address);
+        causeRefresh(!refresh);
       })();
     }
   }, [user, address]);
