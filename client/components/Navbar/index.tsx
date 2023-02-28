@@ -1,10 +1,12 @@
 import React from 'react';
 import * as fcl from '@onflow/fcl';
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useState, useContext } from 'react';
 import { toast } from 'react-nextjs-toast';
+import UserContext from '@/utils/UserContext';
 
-function Navbar({ user, setUserAddress, page, setPage }) {
+function Navbar({ page, setPage }) {
   const [address, setAddress] = useState('');
+  const { user, setSearchAddress } = useContext(UserContext);
 
   const AuthedState = () => {
     return (

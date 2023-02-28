@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
 import * as fcl from '@onflow/fcl';
 import { postWall, getWall, useWallExists } from '../../utils/transactions';
 import TextInput from '../TextInput';
 import MessageView from '../Message';
 import WallAdmin from '@/components/WallAdmin';
 import CreateWall from '@/components/CreateWall';
+import UserContext from '@/utils/UserContext';
 
 type Message = {
   sender: String;
@@ -20,15 +21,19 @@ type Wall = {
   banned: String[];
 };
 
-const Wall = ({ needsMigrate, user, address }) => {
+const Wall = ({ needsMigrate }) => {
   const [wall, setWall] = useState<Wall | any>({});
   const [refresh, causeRefresh] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [wallExists, setWallExists] = useState([false, false]);
 
+  const { user, searchAddress } = useContext(UserContext);
+
+  const address = searchAddress;
+
   useEffect(() => {
     (async () => {
-      setWallExists(await useWallExists(fcl, user, address));
+      await setWallExists(await useWallExists(fcl, user, address));
     })();
   }, [address, refresh]);
 
@@ -45,7 +50,7 @@ const Wall = ({ needsMigrate, user, address }) => {
         setMessages(fcl_messages);
       })();
     }
-  }, [address, wallExists, refresh]);
+  }, [wallExists, refresh]);
 
   const postMessage = (mesageText) => {
     postWall(fcl, mesageText, address).then(() => {
