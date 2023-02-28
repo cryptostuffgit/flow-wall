@@ -20,9 +20,9 @@ export default function Home() {
         <div>
           <Navbar page={page} setPage={setPage} />
           <div>
-            <CanvasView hidden={page !== 'canvas'} page={page} />
-            <MainView hidden={page !== 'messages'} page={page} />
-            <BrowseView hidden={page !== 'browse'} page={page} setPage={setPage} />
+            <CanvasView hidden={page !== 'canvas'} />
+            <MainView hidden={page !== 'messages'} />
+            <BrowseView hidden={page !== 'browse'} setPage={setPage} />
           </div>
         </div>
       </div>

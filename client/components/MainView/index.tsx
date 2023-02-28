@@ -4,13 +4,13 @@ import * as fcl from '@onflow/fcl';
 import Wall from '@/components/Wall';
 import CreateWall from '@/components/CreateWall';
 
-const MainView = ({ page, hidden, user, userAddress }) => {
+const MainView = ({ hidden }) => {
   return (
     <div
       className={'text-container main-container' + (hidden ? ' hidden' : '')}
     >
       <ToastContainer />
-      <Wall page={page} user={user} address={userAddress} />
+      <Wall />
     </div>
   );
 };

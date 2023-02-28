@@ -6,7 +6,7 @@ import CreateWall from '../CreateWall';
 import Canvas from '../Canvas';
 import UserContext from '@/utils/UserContext';
 
-const CanvasView = ({ page, hidden }) => {
+const CanvasView = ({ hidden }) => {
   const [canvasExists, setCanvasExists] = useState([false, false]);
   const { user, searchAddress } = useContext(UserContext);
 
@@ -14,7 +14,7 @@ const CanvasView = ({ page, hidden }) => {
     (async () => {
       setCanvasExists(await useWallExists(fcl, user, searchAddress));
     })();
-  }, [page, searchAddress]);
+  }, [searchAddress]);
 
   const isYou = user.addr === searchAddress;
   const isAdmin = isYou && canvasExists[0];
