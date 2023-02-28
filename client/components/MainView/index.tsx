@@ -41,7 +41,9 @@ const MainView = ({ user, userAddress }) => {
         ) : (
           <></>
         )}
-        {wallExists[0] && isAdmin && <WallAdmin />}
+        {wallExists[0] && isAdmin && (
+          <WallAdmin needsMigrate={!wallExists[1]} />
+        )}
       </h1>
       {wallExists[0] && (
         <Wall user={user} address={userAddress} admin={isAdmin} />

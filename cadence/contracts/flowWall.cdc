@@ -171,7 +171,16 @@ pub contract FlowWall {
     }
 
     pub fun createWall(authAccount: AuthAccount) {
-        let wall <- create Wall(address: authAccount.address, avatar: "", bio: "")
+        let mapAccount = getAccount(self.account.address)
+        let map_cap = mapAccount.getCapability<&{FlowWall.UnclaimedWallsInterface}>(/public/UnclaimedWalls)
+        let map_ref = map_cap.borrow()!
+
+        var wall: @Wall? <- map_ref.remove(address: authAccount.address);
+
+        if wall == nil {
+            wall <-! create Wall(address: authAccount.address, avatar: "", bio: "")
+        }
+
         authAccount.save(<- wall, to: /storage/Wall)
         authAccount.link<&{WallPublic}>(/public/Wall, target: /storage/Wall);
     }

@@ -4,6 +4,7 @@ export async function useWallExists(fcl: any, user: any, wall?: string) {
   if (!user.loggedIn && !wall) {
     return false;
   }
+  console.log('??');
   return await fcl.query({
     cadence: `
 import FlowWall from 0xf3fcd2c1a78f5eee
@@ -11,8 +12,8 @@ import FlowWall from 0xf3fcd2c1a78f5eee
 pub fun main(account: Address): [Bool] {
     let wallAccount = getAccount(account);
     let wall_ref = wallAccount.getCapability<&{FlowWall.WallPublic}>(/public/Wall)
-    let wall = wall_ref.borrow()
-    if wall == nil {
+    let wall_exists = wall_ref.check()
+    if !wall_exists {
         let mapAccount = getAccount(0xf3fcd2c1a78f5eee);
         let map_ref = mapAccount.getCapability<&{FlowWall.UnclaimedWallsInterface}>(/public/UnclaimedWalls)
         let map = map_ref.borrow()!
@@ -122,6 +123,7 @@ export async function updateWall(
   avatar: String,
   bio: String,
 ) {
+  console.log('z');
   const txId = await fcl.mutate({
     cadence: `
 import FlowWall from 0xf3fcd2c1a78f5eee
@@ -155,6 +157,7 @@ transaction(avatar: String, bio: String) {
 }
 
 export async function postWall(fcl: any, message: string, address: String) {
+  console.log('f');
   const txId = await fcl.mutate({
     cadence: `import FlowWall from 0xf3fcd2c1a78f5eee
 
