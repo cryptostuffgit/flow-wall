@@ -19,7 +19,7 @@ type Wall = {
 };
 
 const Wall = ({ user, address, admin }) => {
-  const [wall, setWall] = useState<Wall>({});
+  const [wall, setWall] = useState<Wall | any>({});
   const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {

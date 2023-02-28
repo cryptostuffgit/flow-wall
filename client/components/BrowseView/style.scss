@@ -1,0 +1,14 @@
+.browse-walls {
+    margin: 50px;
+    .created-walls {
+        display: flex;
+        margin-left: 10px;
+        .wall {
+            margin: 10px;
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid black;
+            background-color: $primary;
+        }
+    }
+}

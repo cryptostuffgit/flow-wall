@@ -3,7 +3,7 @@ import * as fcl from '@onflow/fcl';
 import { useEffect, useCallback, useState } from 'react';
 import { toast } from 'react-nextjs-toast';
 
-function Navbar({ user, setUserAddress }) {
+function Navbar({ user, setUserAddress, page, setPage}) {
   const [address, setAddress] = useState('');
 
   const AuthedState = () => {
@@ -45,18 +45,28 @@ function Navbar({ user, setUserAddress }) {
 
   return (
     <div className="nav">
-      <div>Your Address: {user?.addr ?? 'None'}</div>
       <div>
-        <div className="search">
-          <input
-            onChange={onChange}
-            type="text"
-            className="searchTerm"
-            placeholder="Enter Address"
-          />
-          <button onClick={onClick} type="submit" className="searchButton">
-            Find
-          </button>
+        <div className='left-side'>
+          <div className={page == 'canvas' ? 'selected page' : 'page'} onClick={() => setPage("canvas")}>
+            Canvas
+          </div>
+          <div className={page == 'messages' ? 'selected page' : 'page'} onClick={() => setPage("messages")}>
+            Messages
+          </div>
+          <div className={page == 'browse' ? 'selected page' : 'page'} onClick={() => setPage("browse")}>
+            Browse
+          </div>
+          <div className="search">
+            <input
+              onChange={onChange}
+              type="text"
+              className="searchTerm"
+              placeholder="Enter Address"
+            />
+            <button onClick={onClick} type="submit" className="searchButton">
+              Find
+            </button>
+          </div>
         </div>
       </div>
       <div>{user.loggedIn ? <AuthedState /> : <UnauthenticatedState />}</div>
