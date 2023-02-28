@@ -69,26 +69,28 @@ const Wall = ({ wallExists, needsMigrate, isYou, user, address, admin }) => {
         )}
         {wallExists[0] && admin && <WallAdmin needsMigrate={!wallExists[1]} />}
       </h1>
-      <div className="wall">
-        <div className="wall_props">
-          <div className="avatar">
-            <img src={wall.avatar} />
+      {wallExists[0] && (
+        <div className="wall">
+          <div className="wall_props">
+            <div className="avatar">
+              <img src={wall.avatar} />
+            </div>
+            <div className="bio">{wall.bio}</div>
           </div>
-          <div className="bio">{wall.bio}</div>
+          <div className="writer">
+            {user.addr && <TextInput onClick={postMessage} />}
+          </div>
+          <div className="messages">
+            {messages.map((msg, i) => {
+              return (
+                <div className="message" key={i}>
+                  <MessageView user={user} message={msg} />
+                </div>
+              );
+            })}
+          </div>
         </div>
-        <div className="writer">
-          {user.addr && <TextInput onClick={postMessage} />}
-        </div>
-        <div className="messages">
-          {messages.map((msg, i) => {
-            return (
-              <div className="message" key={i}>
-                <MessageView user={user} message={msg} />
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      )}
     </>
   );
 };
