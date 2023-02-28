@@ -2,39 +2,6 @@
   margin-bottom: 20px;
 }
 
-.message-content {
-  padding: 0px 10px 0px 20px;
-  width: 50%;
-  box-shadow: $shadow;
-  border-radius: $border-radius;
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-}
-
-.light {
-  .message-content {
-    background-color: $primary;
-  }
-  .meta {
-    p {
-      color: $darkgray;
-    }
-  }
-}
-
-.dark {
-  .message-content {
-    background-color: rgba($primary, 0.75);
-    color: $black;
-  }
-  .meta {
-    p {
-      color: $darkgray;
-    }
-  }
-}
-
 .meta {
   p {
     text-decoration: none;

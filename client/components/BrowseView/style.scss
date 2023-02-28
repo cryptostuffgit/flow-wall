@@ -1,11 +1,14 @@
 .browse-walls {
   .created-walls {
+    margin-top: 16px;
     display: flex;
+
     .wall {
       cursor: pointer;
       padding: 30px;
       border-radius: $border-radius;
       box-shadow: $shadow;
+      width: fit-content;
     }
   }
 }

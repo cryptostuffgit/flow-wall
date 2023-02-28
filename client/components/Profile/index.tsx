@@ -21,7 +21,7 @@ const Profile = ({ address, setUserAddress, setPage }) => {
   };
 
   return (
-    <div onClick={onClick} className="wall">
+    <div onClick={onClick} className="wall card">
       {address}'s Wall
       {header && (
         <>
