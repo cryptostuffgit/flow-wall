@@ -17,7 +17,6 @@ const MainView = ({ user, userAddress }) => {
 
   const isYou = user.addr === userAddress;
   const isAdmin = isYou && wallExists[0];
-  const needsMigrate = wallExists[0] && !wallExists[1];
 
   return (
     <div className="text-container main-container">
