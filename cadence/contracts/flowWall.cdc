@@ -2,8 +2,8 @@ pub contract FlowWall {
 
     init() {
         let map <- create UnclaimedWalls()
-        FlowWall.account.save(<- map, to: /storage/UnclaimedWalls)
-        FlowWall.account.link<&{UnclaimedWallsInterface}>(/public/UnclaimedWalls, target: /storage/UnclaimedWalls);
+        self.account.save(<- map, to: /storage/UnclaimedWalls)
+        self.account.link<&{UnclaimedWallsInterface}>(/public/UnclaimedWalls, target: /storage/UnclaimedWalls);
     }
 
     pub event MessageSent(wall: Address, sender: Address)
@@ -14,6 +14,7 @@ pub contract FlowWall {
         pub let walls: @{Address: Wall}
         pub fun containsKey(address: Address): Bool
         pub fun remove(address: Address): @Wall?
+        pub fun existRemove(address: Address): @Wall
         pub fun add(address: Address): Void
         pub fun update(address: Address, wall: @Wall): Void
     }
@@ -42,6 +43,11 @@ pub contract FlowWall {
 
             return exists
         }
+
+        pub fun existRemove(address: Address): @Wall {
+            return <- self.walls.remove(key: address)!
+        }
+
 
         pub fun remove(address: Address): @Wall? {
             return <- self.walls.remove(key: address)
@@ -170,18 +176,19 @@ pub contract FlowWall {
         }
     }
 
-    pub fun createWall(authAccount: AuthAccount) {
-        let mapAccount = getAccount(self.account.address)
-        let map_cap = mapAccount.getCapability<&{FlowWall.UnclaimedWallsInterface}>(/public/UnclaimedWalls)
-        let map_ref = map_cap.borrow()!
+    pub fun createWall(authAccount: AuthAccount, map: &AnyResource{FlowWall.UnclaimedWallsInterface}) {
+        let exists = authAccount.getCapability<&{FlowWall.WallPublic}>(/public/Wall)
+        if exists.check() {
+            panic("Cant create again")
+        }
 
-        var wall: @Wall? <- map_ref.remove(address: authAccount.address);
+        var wall <-! create Wall(address: authAccount.address, avatar: "", bio: "")
 
-        if wall == nil {
-            wall <-! create Wall(address: authAccount.address, avatar: "", bio: "")
+        if map.containsKey(address: authAccount.address) {
+            let trash <- wall <- map.existRemove(address: authAccount.address)
+            destroy trash
         }
 
         authAccount.save(<- wall, to: /storage/Wall)
-        authAccount.link<&{WallPublic}>(/public/Wall, target: /storage/Wall);
     }
 }

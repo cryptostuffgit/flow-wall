@@ -23,7 +23,7 @@ export async function useWallHeader(fcl: any, account: string) {
           let wall = wall_ref.borrow()!
           return wall.getHeader()
       }`,
-      args: (arg, t) => [arg(account, t.Address)],
+    args: (arg, t) => [arg(account, t.Address)],
   });
 }
 
@@ -31,7 +31,6 @@ export async function useWallExists(fcl: any, user: any, wall?: string) {
   if (!user.loggedIn && !wall) {
     return false;
   }
-  console.log('??');
   return await fcl.query({
     cadence: `
 import FlowWall from 0xf3fcd2c1a78f5eee
@@ -54,7 +53,6 @@ pub fun main(account: Address): [Bool] {
 }
 
 export async function getWall(fcl: any, wallAddress: any) {
-  console.log('fucker');
   return await fcl.query({
     cadence: `
     import FlowWall from 0xf3fcd2c1a78f5eee
@@ -90,15 +88,19 @@ export async function createWall(fcl: any) {
 import FlowWall from 0xf3fcd2c1a78f5eee
 
 transaction {
-
   let authAccount: AuthAccount;
+  let map: &AnyResource{FlowWall.UnclaimedWallsInterface};
 
   prepare(acct: AuthAccount) {
     self.authAccount = acct;
+    let mapAccount = getAccount(0xf3fcd2c1a78f5eee);
+    let map_ref = mapAccount.getCapability<&{FlowWall.UnclaimedWallsInterface}>(/public/UnclaimedWalls)
+    let map = map_ref.borrow()!
+    self.map = map
   }
 
   execute {
-    log(FlowWall.createWall(authAccount: self.authAccount))
+    log(FlowWall.createWall(authAccount: self.authAccount, map: map))
   }
 }`,
     payer: fcl.authz,
@@ -141,7 +143,7 @@ transaction(address: Address) {
   });
 
   const tx = await fcl.tx(txId).onceSealed();
-  console.log(tx);
+  console.log('1', tx);
 }
 
 export async function updateWall(
@@ -150,7 +152,6 @@ export async function updateWall(
   avatar: String,
   bio: String,
 ) {
-  console.log('z');
   const txId = await fcl.mutate({
     cadence: `
 import FlowWall from 0xf3fcd2c1a78f5eee
@@ -180,11 +181,10 @@ transaction(avatar: String, bio: String) {
   });
 
   const tx = await fcl.tx(txId).onceSealed();
-  console.log(tx);
+  console.log('2', tx);
 }
 
 export async function postWall(fcl: any, message: string, address: String) {
-  console.log('f');
   const txId = await fcl.mutate({
     cadence: `import FlowWall from 0xf3fcd2c1a78f5eee
 
@@ -229,7 +229,7 @@ transaction(address: Address, content: String) {
   });
 
   const tx = await fcl.tx(txId).onceSealed();
-  console.log(tx);
+  console.log('3', tx);
 }
 
 export async function deleteMessage(fcl: any, timestamp: string) {
@@ -259,7 +259,7 @@ transaction(timestamp: UFix64) {
   });
 
   const tx = await fcl.tx(txId).onceSealed();
-  console.log(tx);
+  console.log('4', tx);
 }
 
 export async function banUser(fcl: any, address: string) {
@@ -294,5 +294,5 @@ transaction(address: Address) {
   });
 
   const tx = await fcl.tx(txId).onceSealed();
-  console.log(tx);
+  console.log('5', tx);
 }
