@@ -12,3 +12,7 @@ $darkgray: #303030;
 $shadow: 0 4px 6px -6px $black;
 $shadowThin: 0 2px 3px -3px $black;
 $shadowWhite: 0 4px 6px -6px $white;
+
+.text-container > h1 > p {
+  color: $black;
+}
