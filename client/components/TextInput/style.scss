@@ -1,12 +1,7 @@
-$primary: #8dd8e6;
-$secondary: #8dd8e6;
-$white: black;
-$gray: #9b9b9b;
-
 .form__group {
   position: relative;
   padding: 15px 0 0;
-  margin-top: 10px;
+  margin: 0;
   width: 50%;
 }
 
@@ -14,13 +9,26 @@ $gray: #9b9b9b;
   font-family: inherit;
   width: 100%;
   border: 0;
-  border-bottom: 2px solid $gray;
+  border-bottom: 2px solid;
+  border-width: 2px;
+  border-image: linear-gradient(
+    to right,
+    rgba($accent, 1),
+    rgba($accent, 0.1),
+    rgba($accent, 0),
+    rgba($accent, 0),
+    rgba($accent, 0),
+    rgba($accent, 0),
+    rgba($accent, 0),
+    rgba($accent, 0),
+    rgba($accent, 0)
+  );
+  border-image-slice: 1;
   outline: 0;
   font-size: 1.3rem;
-  color: $white;
+  color: $black;
   padding: 7px 0;
   background: transparent;
-  transition: border-color 0.2s;
 
   &::placeholder {
     color: transparent;
@@ -39,7 +47,7 @@ $gray: #9b9b9b;
   display: block;
   transition: 0.2s;
   font-size: 1rem;
-  color: $gray;
+  color: $accent;
 }
 
 .form__field:focus {
@@ -49,16 +57,13 @@ $gray: #9b9b9b;
     display: block;
     transition: 0.2s;
     font-size: 1rem;
-    color: $primary;
-    font-weight:700;    
+    color: rgba($accent, 0.85);
   }
-  padding-bottom: 6px;  
-  font-weight: 700;
-  border-width: 3px;
-  border-image: linear-gradient(to right, $primary,$secondary);
-  border-image-slice: 1;
 }
 /* reset input */
-.form__field{
-  &:required,&:invalid { box-shadow:none; }
+.form__field {
+  &:required,
+  &:invalid {
+    box-shadow: none;
+  }
 }
