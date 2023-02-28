@@ -8,7 +8,6 @@ pub contract FlowWall {
         self.account.save(<- map, to: /storage/UnclaimedWalls)
         self.account.link<&{UnclaimedWallsInterface}>(/public/UnclaimedWalls, target: /storage/UnclaimedWalls);
         self.createdWalls = {}
-        self.createdWalls = {}
     }
 
     pub event MessageSent(wall: Address, sender: Address)
@@ -231,12 +230,5 @@ pub contract FlowWall {
         authAccount.save(<- wall, to: /storage/Wall)
         authAccount.link<&{WallPublic}>(/public/Wall, target: /storage/Wall);
         self.createdWalls[authAccount.address] = true
-    }
-
-    // Bool for wether or not the wall is claimed
-    pub let createdWalls: {Address: Bool}
-
-    init() {
-        self.createdWalls = {}
     }
 }
