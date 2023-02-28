@@ -33,6 +33,7 @@ const Wall = ({ needsMigrate }) => {
 
   useEffect(() => {
     (async () => {
+      setWallExists([false, false]);
       await setWallExists(await useWallExists(fcl, user, address));
     })();
   }, [address, refresh]);
@@ -67,9 +68,9 @@ const Wall = ({ needsMigrate }) => {
       <h1 className={'heading' + (admin ? ' admin' : '')}>
         <p>
           {isYou && wallExists[0] ? (
-            <>Messages</>
+            <>Your Wall</>
           ) : address && wallExists[0] ? (
-            <>{address} - Messages</>
+            <>{address} - Wall</>
           ) : address && !wallExists[0] ? (
             <>{address} has no wall!</>
           ) : (
