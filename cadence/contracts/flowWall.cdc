@@ -1,9 +1,9 @@
 pub contract FlowWall {
 
     init() {
-        let map <- create unClaimedWalls()
-        FlowWall.account.save(<- map, to: /storage/unClaimedWalls)
-        FlowWall.account.link<&{unClaimedWallsInterface}>(/public/unClaimedWalls, target: /storage/unClaimedWalls);
+        let map <- create UnclaimedWalls()
+        FlowWall.account.save(<- map, to: /storage/UnclaimedWalls)
+        FlowWall.account.link<&{UnclaimedWallsInterface}>(/public/UnclaimedWalls, target: /storage/UnclaimedWalls);
     }
 
     pub event MessageSent(wall: Address, sender: Address)
