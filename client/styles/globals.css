@@ -1,5 +1,6 @@
 .text-container > h1 > p {
   margin: 0;
+  font-weight: normal;
 }
 
 .text-container > div:not(.toast-container) {
