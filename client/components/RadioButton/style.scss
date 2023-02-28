@@ -40,10 +40,20 @@
 input[type='radio'] {
   display: none;
 }
-#text:checked ~ .text,
-#image:checked ~ .image,
-#gif:checked ~ .gif {
-  background: $primary;
+.light {
+  #text:checked ~ .text,
+  #image:checked ~ .image,
+  #gif:checked ~ .gif {
+    background: $primary;
+  }
+}
+
+.dark {
+  #text:checked ~ .text,
+  #image:checked ~ .image,
+  #gif:checked ~ .gif {
+    background: rgba($primary, 0.8);
+  }
 }
 #text:checked ~ .text .dot,
 #image:checked ~ .image .dot,
