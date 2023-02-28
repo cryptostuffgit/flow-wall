@@ -57,8 +57,8 @@
 	},
 	"accounts": {
 		"default": {
-			"address": "f669cb8d41ce0c74",
-			"key": "26c9b9dec97976da0f99287c891a4fa7030e61b5282989f59b4d51c92569d87d"
+			"address": "f3fcd2c1a78f5eee",
+			"key": "ac9c547007baa975291ed7b06b8ac0148b63b8b4224be5543e906e44f75356c5"
 		},
 		"emulator-account": {
 			"address": "f8d6e0586b0a20c7",

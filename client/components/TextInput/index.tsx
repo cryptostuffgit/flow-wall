@@ -9,12 +9,13 @@ function TextInput({onClick}) {
     const handleKeyPress = (event) => {
         if(event.key === 'Enter'){
             onClick(text)
+            setText('')
         }
     }
 
     return(
         <div className="form__group field">
-            <input onChange={(e) => setText(e.target.value)} onKeyDown={handleKeyPress} type="input" className="form__field" placeholder="Name" name="name" id='name' required />
+            <input value={text}onChange={(e) => setText(e.target.value)} onKeyDown={handleKeyPress} type="input" className="form__field" placeholder="Name" name="name" id='name' required />
             <label htmlFor="name" className="form__label">Post</label>
         </div>
     )

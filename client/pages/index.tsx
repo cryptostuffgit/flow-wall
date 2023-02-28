@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import MainView from '@/components/MainView';
 import BrowseView from '@/components/BrowseView';
+import CanvasView from '@/components/CanvasView';
 import { useState, useEffect, useCallback } from 'react';
 import * as fcl from '@onflow/fcl';
 import '../flow/config';
@@ -28,7 +29,7 @@ export default function Home() {
         <Navbar user={user} setUserAddress={setUserAddress} page={page} setPage={setPage}/>
         <div className={styles.container}>
           {page == "canvas" ? 
-            <></> : 
+            <CanvasView user={user} userAddress={userAddress} /> : 
             page == "messages" ? 
             <MainView user={user} userAddress={userAddress}/> 
             : <BrowseView setPage={setPage} setUserAddress={setUserAddress} />}

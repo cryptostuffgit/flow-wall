@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,500,600,700&display=swap');
+
+.wrapper{
+  display: inline-flex;
+  height: 100px;
+  width: 400px;
+  align-items: center;
+  justify-content: space-evenly;
+  border-radius: 5px;
+  padding: 20px 15px;
+}
+.wrapper .option{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 0 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 0 10px;
+  border: 2px solid lightgrey;
+  transition: all 0.3s ease;
+}
+.wrapper .option .dot{
+  height: 20px;
+  width: 20px;
+  background: #d9d9d9;
+  border-radius: 50%;
+  position: relative;
+}
+.wrapper .option .dot::before{
+  position: absolute;
+  content: "";
+  top: 4px;
+  left: 4px;
+  width: 12px;
+  height: 12px;
+  background: $primary;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(1.5);
+  transition: all 0.3s ease;
+}
+input[type="radio"]{
+  display: none;
+}
+#text:checked:checked ~ .text,
+#image:checked:checked ~ .image,
+#gif:checked:checked ~ .gif{
+  border-color: $primary;
+  background: $primary;
+}
+#text:checked:checked ~ .text .dot,
+#image:checked:checked ~ .image .dot,
+#gif:checked:checked ~ .gif .dot{
+  background: #fff;
+}
+#text:checked:checked ~ .text .dot::before,
+#image:checked:checked ~ .image .dot::before,
+#gif:checked:checked ~ .gif .dot::before{
+  opacity: 1;
+  transform: scale(1);
+}
+.wrapper .option span{
+  font-size: 20px;
+  color: #808080;
+}
+#text:checked:checked ~ .text span,
+#image:checked:checked ~ .image span,
+#gif:checked:checked ~ .gif span{
+  color: #fff;
+}
