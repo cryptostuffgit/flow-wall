@@ -3,14 +3,16 @@ import * as fcl from '@onflow/fcl';
 import { useEffect, useCallback, useState } from 'react';
 import { toast } from 'react-nextjs-toast';
 
-function Navbar({ user, setUserAddress, page, setPage}) {
+function Navbar({ user, setUserAddress, page, setPage }) {
   const [address, setAddress] = useState('');
 
   const AuthedState = () => {
     return (
       <div>
         <button className={'authButton'} onClick={fcl.unauthenticate}>
-          Log Out
+          {user.addr.substr(0, 4)}
+          {'...'}
+          {user.addr.split('').reverse().join('').substr(0, 4)}
         </button>
       </div>
     );
@@ -30,42 +32,51 @@ function Navbar({ user, setUserAddress, page, setPage}) {
     setAddress(event.target.value);
   };
 
-  const onClick = async (_event) => {
-    try {
-      const account = await fcl.account(address);
-      setUserAddress(`0x${account.address}`);
-    } catch (e: any) {
-      console.log(e);
-      toast.notify('Invalid account', {
-        type: 'error',
-      });
-      setUserAddress(user.addr);
+  const onKeyUp = async (event) => {
+    if (event.key === 'Enter' || address.length === 18) {
+      try {
+        const account = await fcl.account(address);
+        setUserAddress(`0x${account.address}`);
+      } catch (e: any) {
+        console.log(e);
+        toast.notify('Invalid account', {
+          type: 'error',
+        });
+        setUserAddress(user.addr);
+      }
     }
   };
 
   return (
     <div className="nav">
       <div>
-        <div className='left-side'>
-          <div className={page == 'canvas' ? 'selected page' : 'page'} onClick={() => setPage("canvas")}>
+        <div className="left-side">
+          <div
+            className={page == 'canvas' ? 'selected page' : 'page'}
+            onClick={() => setPage('canvas')}
+          >
             Canvas
           </div>
-          <div className={page == 'messages' ? 'selected page' : 'page'} onClick={() => setPage("messages")}>
+          <div
+            className={page == 'messages' ? 'selected page' : 'page'}
+            onClick={() => setPage('messages')}
+          >
             Messages
           </div>
-          <div className={page == 'browse' ? 'selected page' : 'page'} onClick={() => setPage("browse")}>
+          <div
+            className={page == 'browse' ? 'selected page' : 'page'}
+            onClick={() => setPage('browse')}
+          >
             Browse
           </div>
           <div className="search">
             <input
               onChange={onChange}
+              onKeyUp={onKeyUp}
               type="text"
               className="searchTerm"
               placeholder="Enter Address"
             />
-            <button onClick={onClick} type="submit" className="searchButton">
-              Find
-            </button>
           </div>
         </div>
       </div>

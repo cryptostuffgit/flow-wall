@@ -1,27 +1,27 @@
 @import '../../styles/globals.scss';
 
 .message-container-self {
-    margin-bottom: 20px
+  margin-bottom: 20px;
 }
 
 .message-content {
-    padding: 0px 10px 0px 20px;
-    width: 50%;
-    border-radius: 10px;
-    border: 2px solid black;
-    background-color: $primary;
-    color: white;
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
+  padding: 0px 10px 0px 20px;
+  width: 50%;
+  box-shadow: $shadow;
+  border-radius: $border-radius;
+  background-color: $primary;
+  color: $black;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
 }
 
-.meta{
-    p {
-        text-decoration: none;
-        font-size: 10px;
-        display: block;
-        text-align: right;
-    }
-    color: rgb(48, 48, 48);
+.meta {
+  p {
+    text-decoration: none;
+    font-size: 10px;
+    display: block;
+    text-align: right;
+  }
+  color: $darkgray;
 }
