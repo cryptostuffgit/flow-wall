@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { createWall, useWallExists } from '../../utils/transactions';
+import { useWallExists } from '../../utils/transactions';
 import { ToastContainer } from 'react-nextjs-toast';
 import * as fcl from '@onflow/fcl';
 import Wall from '@/components/Wall';
 import WallAdmin from '@/components/WallAdmin';
+import CreateWall from '@/components/CreateWall';
 
 const MainView = ({ user, userAddress }) => {
-  const [wallExists, setWallExists] = useState(false);
+  const [wallExists, setWallExists] = useState([false, false]);
 
   useEffect(() => {
     (async () => {
@@ -15,44 +16,36 @@ const MainView = ({ user, userAddress }) => {
   }, [userAddress]);
 
   const isYou = user.addr === userAddress;
-  const isAdmin = isYou && wallExists;
-
-  const createWallCB = useCallback(() => {
-    if (user.loggedIn === true) {
-      (async () => {
-        createWall(fcl);
-      })();
-    }
-  }, [user]);
+  const isAdmin = isYou && wallExists[0];
+  const needsMigrate = wallExists[0] && !wallExists[1];
 
   return (
     <div className="text-container main-container">
       <ToastContainer />
       <h1 className={'heading' + (isAdmin ? ' admin' : '')}>
         <p>
-          {isYou && wallExists ? (
+          {isYou && wallExists[0] ? (
             <>Your Wall</>
-          ) : user.addr && isYou && !wallExists ? (
-            <>
-              <button
-                onClick={() => {
-                  createWallCB();
-                }}
-              >
-                Create Wall
-              </button>
-            </>
-          ) : userAddress && wallExists ? (
+          ) : userAddress && wallExists[0] ? (
             <>{userAddress}'s Wall</>
-          ) : userAddress && !wallExists ? (
+          ) : userAddress && !wallExists[0] ? (
             <>{userAddress} has no wall!</>
           ) : (
             <>Search for an Address</>
           )}
         </p>
-        {wallExists && isAdmin && <WallAdmin />}
+        {user.addr && isYou && !wallExists[0] ? (
+          <CreateWall user={user} address={userAddress} isYou={isYou} />
+        ) : user.addr && !isYou && !wallExists[0] ? (
+          <CreateWall user={user} address={userAddress} isYou={isYou} />
+        ) : (
+          <></>
+        )}
+        {wallExists[0] && isAdmin && <WallAdmin />}
       </h1>
-      {wallExists && <Wall user={user} address={userAddress} admin={isAdmin} />}
+      {wallExists[0] && (
+        <Wall user={user} address={userAddress} admin={isAdmin} />
+      )}
     </div>
   );
 };

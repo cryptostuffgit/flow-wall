@@ -30,7 +30,17 @@ pub contract FlowWall {
         }
 
         pub fun containsKey(address: Address): Bool {
-            return self.walls.containsKey(address)
+            let temp <- self.walls.remove(key: address)
+
+            let exists = temp != nil;
+
+            if temp != nil {
+                self.walls[address] <-! temp
+            } else {
+                destroy temp
+            }
+
+            return exists
         }
 
         pub fun remove(address: Address): @Wall? {
