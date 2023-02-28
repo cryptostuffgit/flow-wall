@@ -1,14 +1,23 @@
+.light {
+  .nav {
+    background-color: $primary;
+  }
+}
+
+.dark {
+  .nav {
+    background-color: rgba($primary, 0.75);
+    color: $white;
+  }
+}
+
 .nav {
   padding: 20px 2rem;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #8dd8e6 !important;
-  border-bottom: 2px solid transparent;
-  // border-image: linear-gradient(0.25turn, rgba(153, 69, 255, 1), rgba(20, 241, 149, 1));
-  border-image-slice: 1;
-  box-shadow: $shadow;
+
   .authButton {
     margin-left: 10px;
     background: $white;
@@ -20,6 +29,7 @@
     cursor: pointer;
     outline: inherit;
   }
+
   .authButton:hover {
     background: rgba($white, 0.85);
     transition: all 0.4s ease;
