@@ -100,7 +100,7 @@ transaction {
   }
 
   execute {
-    log(FlowWall.createWall(authAccount: self.authAccount, map: map))
+    log(FlowWall.createWall(authAccount: self.authAccount, map: self.map))
   }
 }`,
     payer: fcl.authz,
