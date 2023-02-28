@@ -30,7 +30,11 @@ export async function getWall(fcl: any, wallAddress: any) {
         let wallAccount = getAccount(account);
         let wall_ref = wallAccount.getCapability<&{FlowWall.WallPublic}>(/public/Wall)
         let wall = wall_ref.borrow()!;
-        return FlowWall.WallPublicRead(wall.address, wall.messages, wall.avatar, wall.bio, wall.banned);
+        if wall != nil {
+            return FlowWall.WallPublicRead(wall.address, wall.messages, wall.avatar, wall.bio, wall.banned);
+        } else {
+            return FlowWall.WallPublicRead(account, [], "", "", []);
+        }
     }
     `,
     args: (arg, t) => [arg(wallAddress, t.Address)],

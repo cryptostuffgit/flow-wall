@@ -4,6 +4,60 @@ pub contract FlowWall {
     pub event WallCreated(creator: Address)
     pub event WallUpdated(wall: Address)
 
+    pub resource interface UnclaimedWallsInterface {
+        pub let walls: @{Address: Wall}
+        pub fun containsKey(address: Address): Bool
+        pub fun remove(address: Address): @Wall?
+        pub fun add(address: Address): Void
+        pub fun update(address: Address, wall: @Wall): Void
+    }
+
+    pub resource UnclaimedWalls: UnclaimedWallsInterface {
+        pub let walls: @{Address: Wall}
+
+        init() {
+            self.walls <- {}
+        }
+
+        destroy() {
+            destroy self.walls
+        }
+
+        pub fun containsKey(address: Address): Bool {
+            return self.walls.containsKey(address)
+        }
+
+        pub fun remove(address: Address): @Wall? {
+            return <- self.walls.remove(key: address)
+        }
+
+        pub fun add(address: Address): Void {
+            var wall <- self.walls.remove(key: address)
+            if wall == nil {
+                let insert <- self.walls[address] <- create Wall(address: address, avatar: "", bio: "")
+                destroy insert
+                destroy wall
+            } else {
+                let throw_away <- self.walls[address] <- wall;
+                destroy throw_away
+            }
+        }
+
+        pub fun update(address: Address, wall: @Wall): Void {
+            if wall == nil {
+                panic("??")
+            } else {
+                self.walls[address] <-! wall
+            }
+        }
+    }
+
+    pub fun createMap() {
+        let map <- create UnclaimedWalls()
+        FlowWall.account.save(<- map, to: /storage/UnclaimedWalls)
+        FlowWall.account.link<&{UnclaimedWallsInterface}>(/public/UnclaimedWalls, target: /storage/UnclaimedWalls);
+    }
+
     pub struct Message {
         pub let sender: Address
         pub let content: String
