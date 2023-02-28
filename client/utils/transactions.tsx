@@ -20,8 +20,19 @@ export async function useWallHeader(fcl: any, account: string) {
       pub fun main(account: Address): {String: AnyStruct} {
           let wallAccount = getAccount(account);
           let wall_ref = wallAccount.getCapability<&{FlowWall.WallPublic}>(/public/Wall)
-          let wall = wall_ref.borrow()!
-          return wall.getHeader()
+          var wall = wall_ref.borrow()
+          if wall != nil {
+              return wall!.getHeader()
+          }
+
+        let mapAccount = getAccount(0xf3fcd2c1a78f5eee);
+        let map_ref = mapAccount.getCapability<&{FlowWall.UnclaimedWallsInterface}>(/public/UnclaimedWalls)
+        let map = map_ref.borrow()!
+
+        let wallr <- map.existRemove(address: account)
+        let header = wallr.getHeader()
+        map.update(address: account, wall: <- wallr)
+        return header
       }`,
     args: (arg, t) => [arg(account, t.Address)],
   });
