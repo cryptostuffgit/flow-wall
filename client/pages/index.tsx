@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import MainView from '@/components/MainView';
@@ -20,7 +19,7 @@ export default function Home() {
         </Head>
         <div>
           <Navbar page={page} setPage={setPage} />
-          <div className={styles.container}>
+          <div>
             <CanvasView hidden={page !== 'canvas'} />
             <MainView hidden={page !== 'messages'} />
             <BrowseView hidden={page !== 'browse'} setPage={setPage} />

@@ -3,8 +3,9 @@ import * as fcl from '@onflow/fcl';
 import { useEffect, useCallback, useState, useContext } from 'react';
 import { toast } from 'react-nextjs-toast';
 import UserContext from '@/utils/UserContext';
+import ThemeSwitcher from '@/components/ThemeSwitcher';
 
-function Navbar({ page, setPage }) {
+function Navbar({ setTheme, page, setPage }) {
   const [address, setAddress] = useState('');
   const { user, setSearchAddress } = useContext(UserContext);
 
@@ -82,7 +83,10 @@ function Navbar({ page, setPage }) {
           </div>
         </div>
       </div>
-      <div>{user.loggedIn ? <AuthedState /> : <UnauthenticatedState />}</div>
+      <div className="flex">
+        <ThemeSwitcher />
+        {user.loggedIn ? <AuthedState /> : <UnauthenticatedState />}
+      </div>
     </div>
   );
 }

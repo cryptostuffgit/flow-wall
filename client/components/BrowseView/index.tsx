@@ -14,7 +14,12 @@ const BrowseView = ({ hidden, setPage }) => {
   }, []);
 
   return (
-    <div className={'text-container browse-walls ' + (hidden ? ' hidden' : '')}>
+    <div
+      className={
+        'text-container main-container browse-walls ' +
+        (hidden ? ' hidden' : '')
+      }
+    >
       <h1>
         <p>Visit a Wall</p>
       </h1>

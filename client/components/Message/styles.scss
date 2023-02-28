@@ -7,11 +7,33 @@
   width: 50%;
   box-shadow: $shadow;
   border-radius: $border-radius;
-  background-color: $primary;
-  color: $black;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
+}
+
+.light {
+  .message-content {
+    background-color: $primary;
+    color: $black;
+  }
+  .meta {
+    p {
+      color: $darkgray;
+    }
+  }
+}
+
+.dark {
+  .message-content {
+    background-color: $primary;
+    color: $black;
+  }
+  .meta {
+    p {
+      color: $darkgray;
+    }
+  }
 }
 
 .meta {
@@ -21,5 +43,4 @@
     display: block;
     text-align: right;
   }
-  color: $darkgray;
 }
