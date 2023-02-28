@@ -1,11 +1,8 @@
 .browse-walls {
-  margin: 0;
   .created-walls {
     display: flex;
-    margin-left: 10px;
     .wall {
       cursor: pointer;
-      margin: 10px;
       padding: 30px;
       border-radius: $border-radius;
       box-shadow: $shadow;

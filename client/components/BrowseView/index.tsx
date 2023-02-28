@@ -14,8 +14,10 @@ const BrowseView = ({ hidden, setPage }) => {
   }, []);
 
   return (
-    <div className={'browse-walls ' + (hidden ? ' hidden' : '')}>
-      <h1>Visit a Wall</h1>
+    <div className={'text-container browse-walls ' + (hidden ? ' hidden' : '')}>
+      <h1>
+        <p>Visit a Wall</p>
+      </h1>
       <div className="created-walls">
         {walls &&
           Object.keys(walls).map((wall) => {
