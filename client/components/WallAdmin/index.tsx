@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import * as fcl from '@onflow/fcl';
-import { updateWall } from '../../utils/transactions';
+import { createWall, updateWall } from '../../utils/transactions';
 import TextInput from '../TextInput';
 import MessageView from '../Message';
 import Icon from '../Icon';
 
-const WallAdmin = ({ user, address, admin }) => {
+const WallAdmin = ({ user, address, admin, needsMigrate }) => {
   const editBio = useCallback(() => {
     (async () => {
       const bio = 'new test bio!';
@@ -22,8 +22,17 @@ const WallAdmin = ({ user, address, admin }) => {
     })();
   }, [admin]);
 
+  const migrate = useCallback(() => {
+    //
+    (async () => {
+      await createWall(fcl, user);
+      //
+    })();
+  }, [needsMigrate]);
+
   return (
     <div className="flex">
+      <Icon name="edit" tooltip="Migrate" onClick={migrate} />
       <Icon name="edit" tooltip="Change Bio" onClick={editBio} />
       <Icon name="avatar" tooltip="Change Avatar" onClick={editAvatar} />
     </div>
