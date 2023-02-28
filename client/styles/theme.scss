@@ -3,7 +3,11 @@ $shadowThin: 0 2px 3px -3px $black !global;
 $shadowWhite: 0 4px 6px -6px $white !global;
 
 .light {
-  background-color: $bg-color;
+  background: linear-gradient(
+    135deg,
+    rgba($bg-color, 1) 0%,
+    rgba($bg-color-shift, 1) 100%
+  );
   color: $text-color;
 
   h1 {
@@ -33,7 +37,11 @@ $shadowWhite: 0 4px 6px -6px $white !global;
 }
 
 .dark {
-  background-color: $bg-color-dark;
+  background: linear-gradient(
+    135deg,
+    rgba($bg-color-dark, 1) 0%,
+    rgba($bg-color-dark-shift, 1) 100%
+  );
   color: $text-color-dark;
 
   h1 {
