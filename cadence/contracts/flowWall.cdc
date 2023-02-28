@@ -1,5 +1,11 @@
 pub contract FlowWall {
 
+    init() {
+        let map <- create UnclaimedWalls()
+        FlowWall.account.save(<- map, to: /storage/UnclaimedWalls)
+        FlowWall.account.link<&{UnclaimedWallsInterface}>(/public/UnclaimedWalls, target: /storage/UnclaimedWalls);
+    }
+
     pub event MessageSent(wall: Address, sender: Address)
     pub event WallCreated(creator: Address)
     pub event WallUpdated(wall: Address)
@@ -24,7 +30,17 @@ pub contract FlowWall {
         }
 
         pub fun containsKey(address: Address): Bool {
-            return self.walls.containsKey(address)
+            let temp <- self.walls.remove(key: address)
+
+            let exists = temp != nil;
+
+            if temp != nil {
+                self.walls[address] <-! temp
+            } else {
+                destroy temp
+            }
+
+            return exists
         }
 
         pub fun remove(address: Address): @Wall? {
@@ -50,12 +66,6 @@ pub contract FlowWall {
                 self.walls[address] <-! wall
             }
         }
-    }
-
-    pub fun createMap() {
-        let map <- create UnclaimedWalls()
-        FlowWall.account.save(<- map, to: /storage/UnclaimedWalls)
-        FlowWall.account.link<&{UnclaimedWallsInterface}>(/public/UnclaimedWalls, target: /storage/UnclaimedWalls);
     }
 
     pub struct Message {
@@ -161,7 +171,16 @@ pub contract FlowWall {
     }
 
     pub fun createWall(authAccount: AuthAccount) {
-        let wall <- create Wall(address: authAccount.address, avatar: "", bio: "")
+        let mapAccount = getAccount(self.account.address)
+        let map_cap = mapAccount.getCapability<&{FlowWall.UnclaimedWallsInterface}>(/public/UnclaimedWalls)
+        let map_ref = map_cap.borrow()!
+
+        var wall: @Wall? <- map_ref.remove(address: authAccount.address);
+
+        if wall == nil {
+            wall <-! create Wall(address: authAccount.address, avatar: "", bio: "")
+        }
+
         authAccount.save(<- wall, to: /storage/Wall)
         authAccount.link<&{WallPublic}>(/public/Wall, target: /storage/Wall);
     }
