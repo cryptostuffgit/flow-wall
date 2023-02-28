@@ -94,10 +94,12 @@ pub contract FlowWall {
     pub struct CanvasItem {
         pub let type: String
         pub let content: String
+        pub let timestamp: UFix64
 
-        init(_type: String, _content: String) {
+        init(_type: String, _content: String, _timestamp: UFix64) {
             self.type = _type
             self.content = _content
+            self.timestamp = _timestamp
         }
     }
 
@@ -107,13 +109,15 @@ pub contract FlowWall {
         pub var avatar: String
         pub var bio: String
         pub let banned: [Address]
+        pub let canvasItems: [CanvasItem]
 
-        init(address: Address, messages: [Message], avatar: String, bio: String, banned: [Address]) {
+        init(address: Address, messages: [Message], avatar: String, bio: String, banned: [Address], canvasItems: [CanvasItem]) {
           self.address = address
           self.messages = messages
           self.avatar = avatar
           self.bio = bio
           self.banned = banned
+          self.canvasItems = canvasItems
         }
     }
 
@@ -209,7 +213,8 @@ pub contract FlowWall {
             }
             self.canvasItems.append(CanvasItem(
                 _type: type,
-                _content: content
+                _content: content,
+                _timestamp: getCurrentBlock().timestamp
             ))
         }
     }

@@ -7,12 +7,14 @@ function TextInput({ onClick }) {
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       onClick(text);
+      setText('');
     }
   };
 
   return (
     <div className="form__group field">
       <input
+        value={text}
         onChange={(e) => setText(e.target.value)}
         onKeyDown={handleKeyPress}
         type="input"

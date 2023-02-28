@@ -89,14 +89,14 @@ export async function getWall(fcl: any, wallAddress: any) {
         let wall = wall_ref.borrow();
         if wall != nil {
             let wall = wall!!
-            return FlowWall.WallPublicRead(wall.address, wall.messages, wall.avatar, wall.bio, wall.banned);
+            return FlowWall.WallPublicRead(wall.address, wall.messages, wall.avatar, wall.bio, wall.banned, wall.canvasItems);
         } else {
             let mapAccount = getAccount(0xf3fcd2c1a78f5eee);
             let map_ref = mapAccount.getCapability<&{FlowWall.UnclaimedWallsInterface}>(/public/UnclaimedWalls)
             let map = map_ref.borrow()!
             let wall <- map.remove(address: account)!!
 
-            let pub_read = FlowWall.WallPublicRead(wall.address, wall.messages, wall.avatar, wall.bio, wall.banned);
+            let pub_read = FlowWall.WallPublicRead(wall.address, wall.messages, wall.avatar, wall.bio, wall.banned, wall.canvasItems);
 
             map.update(address: account, wall: <- wall)
 
@@ -257,6 +257,47 @@ transaction(address: Address, content: String) {
   const tx = await fcl.tx(txId).onceSealed();
   console.log('3', tx);
 }
+
+
+
+export async function postContent(fcl: any, message: string, address: String, type: String) {
+  const txId = await fcl.mutate({
+    cadence: `import FlowWall from 0xf3fcd2c1a78f5eee
+
+    transaction(address: Address, content: String, type: String) {
+      
+      let authAccount: AuthAccount
+      let content: String
+      let type: String
+      
+      prepare(authAccount: AuthAccount) {
+        self.authAccount = authAccount
+        self.content = content
+        self.type = type
+      }
+
+      
+      pre {
+        self.authAccount.address == address: "You can't add content to a canvas that isn't yours"
+      }
+    
+      execute {
+        let wall <- self.authAccount.load<@FlowWall.Wall>(from: /storage/Wall)!
+        wall.addCanvasItem(type:type, content: content)
+        self.authAccount.save(<- wall, to: /storage/Wall)
+      }
+    }`,
+    args: (arg, t) => [arg(address, t.Address), arg(message, t.String), arg(type, t.String)],
+    payer: fcl.authz,
+    proposer: fcl.authz,
+    authorizations: [fcl.authz],
+    limit: 50,
+  });
+
+  const tx = await fcl.tx(txId).onceSealed();
+  console.log('3', tx);
+}
+
 
 export async function deleteMessage(fcl: any, timestamp: string) {
   const txId = await fcl.mutate({
