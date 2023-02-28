@@ -27,6 +27,21 @@ export async function useWallHeader(fcl: any, account: string) {
   });
 }
 
+export async function useCanvas(fcl: any, account: string) {
+  return await fcl.query({
+    cadence: `
+      import FlowWall from 0xf3fcd2c1a78f5eee
+
+      pub fun main(account: Address): {String: AnyStruct} {
+          let wallAccount = getAccount(account);
+          let wall_ref = wallAccount.getCapability<&{FlowWall.WallPublic}>(/public/Wall)
+          let wall = wall_ref.borrow()!
+          return wall.canvasItems
+      }`,
+      args: (arg, t) => [arg(account, t.Address)],
+  });
+}
+
 export async function useWallExists(fcl: any, user: any, wall?: string) {
   if (!user.loggedIn && !wall) {
     return false;
