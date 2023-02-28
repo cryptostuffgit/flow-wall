@@ -2,12 +2,21 @@
   .nav {
     background-color: $primary;
   }
+
+  .searchTerm {
+    border: 3px solid $accent;
+  }
 }
 
 .dark {
   .nav {
     background-color: rgba($primary, 0.75);
     color: $white;
+  }
+
+  .searchTerm {
+    border: 3px solid rgba($accent, 0.5);
+    color: $black;
   }
 }
 
@@ -45,7 +54,6 @@
   .searchTerm {
     text-align: center;
     width: 20ch;
-    border: 3px solid $accent;
     height: 30px;
     border-radius: $border-radius;
   }
