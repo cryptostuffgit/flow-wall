@@ -10,6 +10,7 @@ $shadowWhite: 0 4px 6px -6px $white !global;
     color: $primary-color;
   }
 
+  span,
   input,
   p,
   a {
@@ -39,6 +40,7 @@ $shadowWhite: 0 4px 6px -6px $white !global;
     color: rgba($primary-color-dark, 0.8);
   }
 
+  span,
   p,
   input,
   a {

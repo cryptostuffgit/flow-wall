@@ -21,7 +21,7 @@ type Canvas = {
 const Canvas = ({ user, address, admin }) => {
   const [canvas, setCanvas] = useState<Canvas | any>({});
   const [content, setContent] = useState<CanvasItem[]>([]);
-  const [contentType, setType] = useState('text')
+  const [contentType, setType] = useState('text');
 
   useEffect(() => {
     (async () => {
@@ -44,30 +44,29 @@ const Canvas = ({ user, address, admin }) => {
   };
 
   const buttonClick = (value) => {
-    setType(value)
-    console.log(value)
-  }
+    setType(value);
+  };
 
   return (
     <>
       <div className="wall">
-        <div className="wall_props">
-          <div className="avatar">
-            <img src={canvas.avatar} />
-          </div>
-          <div className="bio">{canvas.bio}</div>
-        </div>
         <div className="writer">
           {user.addr && admin ? <TextInput onClick={postContentFun} /> : <></>}
-          {user.addr && admin ? <RadioButton buttonClicked={buttonClick}/> : <></>}
+          {user.addr && admin ? (
+            <RadioButton buttonClicked={buttonClick} />
+          ) : (
+            <></>
+          )}
         </div>
         <div className="messages">
           {content.map((msg, i) => {
             return (
               <div className="message" key={i}>
-                { msg.type == 'text' ? <MessageView user={user} message={msg} /> :
+                {msg.type == 'text' ? (
+                  <MessageView user={user} message={msg} />
+                ) : (
                   <img className="imageDisplay" src={msg.content as string} />
-                }
+                )}
               </div>
             );
           })}
