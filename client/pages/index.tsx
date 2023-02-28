@@ -31,7 +31,7 @@ export default function Home() {
             <></> : 
             page == "messages" ? 
             <MainView user={user} userAddress={userAddress}/> 
-            : <BrowseView />}
+            : <BrowseView setPage={setPage} setUserAddress={setUserAddress} />}
         </div>
       </div>
     </div>

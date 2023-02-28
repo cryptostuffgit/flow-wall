@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useWallHeader } from "@/utils/transactions";
 import * as fcl from '@onflow/fcl';
 
-const Profile = ({address}) => {
+const Profile = ({address, setUserAddress, setPage}) => {
   const [header, setHeader] = useState<any>({})
 
   useEffect(() => {
@@ -12,9 +12,14 @@ const Profile = ({address}) => {
       setHeader(headerData)
     })()
   }, []);
+
+  const onClick = () => {
+    setUserAddress(address)
+    setPage("messages")
+  }
   
   return (
-    <div className="wall">
+    <div onClick={onClick} className="wall">
       {address}'s Wall
       {header && <>
         <div>

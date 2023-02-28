@@ -3,7 +3,7 @@ import { useCreatedWalls } from "@/utils/transactions";
 import Profile from "@/components/Profile";
 import * as fcl from '@onflow/fcl';
 
-const BrowseView = () => {
+const BrowseView = ({setPage, setUserAddress}) => {
   const [walls, setWalls] = useState<any>({})
 
   useEffect(() => {
@@ -21,7 +21,11 @@ const BrowseView = () => {
       </h1>
       <div className="created-walls">
         {walls && Object.keys(walls).map(wall => {
-          return <Profile address={wall}/>
+          return <Profile 
+            address={wall} 
+            setUserAddress={setUserAddress} 
+            setPage={setPage}
+          />
         })}
       </div>
     </div>

@@ -4,6 +4,7 @@ pub contract FlowWall {
         let map <- create UnclaimedWalls()
         self.account.save(<- map, to: /storage/UnclaimedWalls)
         self.account.link<&{UnclaimedWallsInterface}>(/public/UnclaimedWalls, target: /storage/UnclaimedWalls);
+        self.createdWalls = {}
     }
 
     pub event MessageSent(wall: Address, sender: Address)
@@ -59,6 +60,7 @@ pub contract FlowWall {
                 let insert <- self.walls[address] <- create Wall(address: address, avatar: "", bio: "")
                 destroy insert
                 destroy wall
+                FlowWall.createdWalls[address] = false
             } else {
                 let throw_away <- self.walls[address] <- wall;
                 destroy throw_away
@@ -110,6 +112,7 @@ pub contract FlowWall {
         pub let banned: [Address]
         pub fun sendMessage(sender: AuthAccount, content: String)
         pub fun updateWall(owner: AuthAccount, avatar: String, bio: String)
+        pub fun getHeader(): {String: AnyStruct}
     }
 
     pub resource Wall: WallPublic {
@@ -174,6 +177,14 @@ pub contract FlowWall {
                 index = index + 1
             }
         }
+
+        pub fun getHeader(): {String: AnyStruct} {
+            return {
+                "address": self.address,
+                "avatar": self.avatar,
+                "bio": self.bio
+            }
+        }
     }
 
     pub fun createWall(authAccount: AuthAccount, map: &AnyResource{FlowWall.UnclaimedWallsInterface}) {
@@ -190,5 +201,10 @@ pub contract FlowWall {
         }
 
         authAccount.save(<- wall, to: /storage/Wall)
+        authAccount.link<&{WallPublic}>(/public/Wall, target: /storage/Wall);
+        self.createdWalls[authAccount.address] = true
     }
+
+    // Bool for wether or not the wall is claimed
+    pub let createdWalls: {Address: Bool}
 }
