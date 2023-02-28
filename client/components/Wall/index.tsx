@@ -21,7 +21,7 @@ type Wall = {
   banned: String[];
 };
 
-const Wall = ({ needsMigrate }) => {
+const Wall = ({ page, needsMigrate }) => {
   const [wall, setWall] = useState<Wall | any>({});
   const [refresh, causeRefresh] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -51,7 +51,7 @@ const Wall = ({ needsMigrate }) => {
         setMessages(fcl_messages);
       })();
     }
-  }, [address, wallExists, refresh]);
+  }, [page, address, wallExists, refresh]);
 
   const postMessage = (mesageText) => {
     postWall(fcl, mesageText, address).then(() => {
