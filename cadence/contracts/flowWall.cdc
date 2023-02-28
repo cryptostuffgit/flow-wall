@@ -1,5 +1,11 @@
 pub contract FlowWall {
 
+    init() {
+        let map <- create unClaimedWalls()
+        FlowWall.account.save(<- map, to: /storage/unClaimedWalls)
+        FlowWall.account.link<&{unClaimedWallsInterface}>(/public/unClaimedWalls, target: /storage/unClaimedWalls);
+    }
+
     pub event MessageSent(wall: Address, sender: Address)
     pub event WallCreated(creator: Address)
     pub event WallUpdated(wall: Address)
@@ -50,12 +56,6 @@ pub contract FlowWall {
                 self.walls[address] <-! wall
             }
         }
-    }
-
-    pub fun createMap() {
-        let map <- create UnclaimedWalls()
-        FlowWall.account.save(<- map, to: /storage/UnclaimedWalls)
-        FlowWall.account.link<&{UnclaimedWallsInterface}>(/public/UnclaimedWalls, target: /storage/UnclaimedWalls);
     }
 
     pub struct Message {
