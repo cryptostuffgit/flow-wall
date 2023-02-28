@@ -49,7 +49,7 @@ export async function useCanvas(fcl: any, account: string) {
           let wall = wall_ref.borrow()!
           return wall.canvasItems
       }`,
-      args: (arg, t) => [arg(account, t.Address)],
+    args: (arg, t) => [arg(account, t.Address)],
   });
 }
 
@@ -258,9 +258,12 @@ transaction(address: Address, content: String) {
   console.log('3', tx);
 }
 
-
-
-export async function postContent(fcl: any, message: string, address: String, type: String) {
+export async function postContent(
+  fcl: any,
+  message: string,
+  address: String,
+  type: String,
+) {
   const txId = await fcl.mutate({
     cadence: `import FlowWall from 0xf3fcd2c1a78f5eee
 
@@ -287,7 +290,11 @@ export async function postContent(fcl: any, message: string, address: String, ty
         self.authAccount.save(<- wall, to: /storage/Wall)
       }
     }`,
-    args: (arg, t) => [arg(address, t.Address), arg(message, t.String), arg(type, t.String)],
+    args: (arg, t) => [
+      arg(address, t.Address),
+      arg(message, t.String),
+      arg(type, t.String),
+    ],
     payer: fcl.authz,
     proposer: fcl.authz,
     authorizations: [fcl.authz],
@@ -297,7 +304,6 @@ export async function postContent(fcl: any, message: string, address: String, ty
   const tx = await fcl.tx(txId).onceSealed();
   console.log('3', tx);
 }
-
 
 export async function deleteMessage(fcl: any, timestamp: string) {
   const txId = await fcl.mutate({

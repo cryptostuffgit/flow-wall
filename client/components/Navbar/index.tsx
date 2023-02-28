@@ -38,13 +38,13 @@ function Navbar({ page, setPage }) {
     if (event.key === 'Enter' || address.length === 18) {
       try {
         const account = await fcl.account(address);
-        setUserAddress(`0x${account.address}`);
+        setSearchAddress(`0x${account.address}`);
       } catch (e: any) {
         console.log(e);
         toast.notify('Invalid account', {
           type: 'error',
         });
-        setUserAddress(user.addr);
+        setSearchAddress(user.addr);
       }
     }
   };

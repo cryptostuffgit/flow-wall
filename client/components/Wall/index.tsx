@@ -50,7 +50,7 @@ const Wall = ({ needsMigrate }) => {
         setMessages(fcl_messages);
       })();
     }
-  }, [wallExists, refresh]);
+  }, [address, wallExists, refresh]);
 
   const postMessage = (mesageText) => {
     postWall(fcl, mesageText, address).then(() => {
@@ -67,9 +67,9 @@ const Wall = ({ needsMigrate }) => {
       <h1 className={'heading' + (admin ? ' admin' : '')}>
         <p>
           {isYou && wallExists[0] ? (
-            <>Your Wall</>
+            <>Messages</>
           ) : address && wallExists[0] ? (
-            <>{address}'s Wall</>
+            <>{address} - Messages</>
           ) : address && !wallExists[0] ? (
             <>{address} has no wall!</>
           ) : (

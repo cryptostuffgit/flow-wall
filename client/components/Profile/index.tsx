@@ -11,7 +11,6 @@ const Profile = ({ address, setUserAddress, setPage }) => {
   useEffect(() => {
     (async () => {
       const headerData = await useWallHeader(fcl, address);
-      console.log(headerData);
       setHeader(headerData);
     })();
   }, []);
