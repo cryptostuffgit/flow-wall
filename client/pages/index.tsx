@@ -16,6 +16,9 @@ export default function Home() {
       <div className="layout">
         <Head>
           <link rel="icon" href="/favicon.ico" />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link href="https://fonts.googleapis.com/css?family=Golos+Text:regular,bold,italic&subset=latin,latin-ext" rel="stylesheet"></link>
         </Head>
         <div>
           <Navbar page={page} setPage={setPage} />
