@@ -1,9 +1,12 @@
 import '../flow/config';
 
-export async function createdWalls(fcl: any) {
+const envVar = "0x492380dc41f13fde"
+// 0xf3fcd2c1a78f5eee
+
+export async function useCreatedWalls(fcl: any) {
   return await fcl.query({
     cadence: `
-      import FlowWall from 0xf3fcd2c1a78f5eee
+      import FlowWall from ${envVar}
 
       pub fun main(): {Address:Bool} {
           let createdWalls = FlowWall.createdWalls
@@ -12,10 +15,10 @@ export async function createdWalls(fcl: any) {
   });
 }
 
-export async function wallHeader(fcl: any, account: string) {
+export async function useWallHeader(fcl: any, account: string) {
   return await fcl.query({
     cadence: `
-      import FlowWall from 0xf3fcd2c1a78f5eee
+      import FlowWall from ${envVar}
 
       pub fun main(account: Address): {String: AnyStruct} {
           let wallAccount = getAccount(account);
@@ -25,7 +28,7 @@ export async function wallHeader(fcl: any, account: string) {
               return wall!.getHeader()
           }
 
-        let mapAccount = getAccount(0xf3fcd2c1a78f5eee);
+        let mapAccount = getAccount(${envVar});
         let map_ref = mapAccount.getCapability<&{FlowWall.UnclaimedWallsInterface}>(/public/UnclaimedWalls)
         let map = map_ref.borrow()!
 
@@ -41,7 +44,7 @@ export async function wallHeader(fcl: any, account: string) {
 export async function useCanvas(fcl: any, account: string) {
   return await fcl.query({
     cadence: `
-      import FlowWall from 0xf3fcd2c1a78f5eee
+      import FlowWall from ${envVar}
 
       pub fun main(account: Address): {String: AnyStruct} {
           let wallAccount = getAccount(account);
@@ -59,14 +62,14 @@ export async function wallExists(fcl: any, user: any, wall?: string) {
   }
   return await fcl.query({
     cadence: `
-import FlowWall from 0xf3fcd2c1a78f5eee
+import FlowWall from ${envVar}
 
 pub fun main(account: Address): [Bool] {
     let wallAccount = getAccount(account);
     let wall_ref = wallAccount.getCapability<&{FlowWall.WallPublic}>(/public/Wall)
     let wall_exists = wall_ref.check()
     if !wall_exists {
-        let mapAccount = getAccount(0xf3fcd2c1a78f5eee);
+        let mapAccount = getAccount(${envVar});
         let map_ref = mapAccount.getCapability<&{FlowWall.UnclaimedWallsInterface}>(/public/UnclaimedWalls)
         let map = map_ref.borrow()!
 
@@ -81,7 +84,7 @@ pub fun main(account: Address): [Bool] {
 export async function getWall(fcl: any, wallAddress: any) {
   return await fcl.query({
     cadence: `
-    import FlowWall from 0xf3fcd2c1a78f5eee
+    import FlowWall from ${envVar}
 
     pub fun main(account: Address): FlowWall.WallPublicRead {
         let wallAccount = getAccount(account);
@@ -91,7 +94,7 @@ export async function getWall(fcl: any, wallAddress: any) {
             let wall = wall!!
             return FlowWall.WallPublicRead(wall.address, wall.messages, wall.avatar, wall.bio, wall.banned, wall.canvasItems);
         } else {
-            let mapAccount = getAccount(0xf3fcd2c1a78f5eee);
+            let mapAccount = getAccount(${envVar});
             let map_ref = mapAccount.getCapability<&{FlowWall.UnclaimedWallsInterface}>(/public/UnclaimedWalls)
             let map = map_ref.borrow()!
             let wall <- map.remove(address: account)!!
@@ -111,7 +114,7 @@ export async function getWall(fcl: any, wallAddress: any) {
 export async function createWall(fcl: any) {
   const txId = await fcl.mutate({
     cadence: `
-import FlowWall from 0xf3fcd2c1a78f5eee
+import FlowWall from ${envVar}
 
 transaction {
   let authAccount: AuthAccount;
@@ -119,7 +122,7 @@ transaction {
 
   prepare(acct: AuthAccount) {
     self.authAccount = acct;
-    let mapAccount = getAccount(0xf3fcd2c1a78f5eee);
+    let mapAccount = getAccount(${envVar});
     let map_ref = mapAccount.getCapability<&{FlowWall.UnclaimedWallsInterface}>(/public/UnclaimedWalls)
     let map = map_ref.borrow()!
     self.map = map
@@ -142,7 +145,7 @@ transaction {
 export async function createWallOther(fcl: any, address: String) {
   const txId = await fcl.mutate({
     cadence: `
-import FlowWall from 0xf3fcd2c1a78f5eee
+import FlowWall from ${envVar}
 
 transaction(address: Address) {
   let authAccount: AuthAccount;
@@ -151,7 +154,7 @@ transaction(address: Address) {
 
   prepare(acct: AuthAccount) {
     self.authAccount = acct;
-    let mapAccount = getAccount(0xf3fcd2c1a78f5eee);
+    let mapAccount = getAccount(${envVar});
     let map_ref = mapAccount.getCapability<&{FlowWall.UnclaimedWallsInterface}>(/public/UnclaimedWalls)
     let map = map_ref.borrow()!
     self.map = map;
@@ -180,7 +183,7 @@ export async function updateWall(
 ) {
   const txId = await fcl.mutate({
     cadence: `
-import FlowWall from 0xf3fcd2c1a78f5eee
+import FlowWall from ${envVar}
 
 transaction(avatar: String, bio: String) {
 
@@ -212,7 +215,7 @@ transaction(avatar: String, bio: String) {
 
 export async function postWall(fcl: any, message: string, address: String) {
   const txId = await fcl.mutate({
-    cadence: `import FlowWall from 0xf3fcd2c1a78f5eee
+    cadence: `import FlowWall from ${envVar}
 
 transaction(address: Address, content: String) {
 
@@ -227,7 +230,7 @@ transaction(address: Address, content: String) {
     let wall = wall_ref.borrow()
     self.wall = wall;
 
-    let mapAccount = getAccount(0xf3fcd2c1a78f5eee);
+    let mapAccount = getAccount(${envVar});
     let map_ref = mapAccount.getCapability<&{FlowWall.UnclaimedWallsInterface}>(/public/UnclaimedWalls)
     let map = map_ref.borrow()!
     self.map = map;
@@ -265,7 +268,7 @@ export async function postContent(
   type: String,
 ) {
   const txId = await fcl.mutate({
-    cadence: `import FlowWall from 0xf3fcd2c1a78f5eee
+    cadence: `import FlowWall from ${envVar}
 
     transaction(address: Address, content: String, type: String) {
       
@@ -308,7 +311,7 @@ export async function postContent(
 export async function deleteMessage(fcl: any, timestamp: string) {
   const txId = await fcl.mutate({
     cadence: `
-import FlowWall from 0xf3fcd2c1a78f5eee
+import FlowWall from ${envVar}
 
 transaction(timestamp: UFix64) {
   
@@ -338,7 +341,7 @@ transaction(timestamp: UFix64) {
 export async function banUser(fcl: any, address: string) {
   const txId = await fcl.mutate({
     cadence: `
-import FlowWall from 0xf3fcd2c1a78f5eee
+import FlowWall from ${envVar}
 
 transaction(address: Address) {
   
