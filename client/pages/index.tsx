@@ -14,7 +14,7 @@ import '../flow/config';
 
 export default function Home() {
   const [page, setPage] = useState('canvas');
-  const { user, searchAddress, setSearchAddress } = useContext(UserContext);
+  const { searchAddress, setSearchAddress } = useContext(UserContext);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -27,7 +27,11 @@ export default function Home() {
     }
   }, []);
 
-  if (searchAddress !== null && searchAddress.length === 18) {
+  if (
+    searchAddress !== null &&
+    searchAddress !== undefined &&
+    searchAddress.length === 18
+  ) {
     window.history.replaceState(
       {},
       'WaterFall',
