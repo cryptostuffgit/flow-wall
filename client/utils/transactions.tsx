@@ -1,6 +1,6 @@
 import '../flow/config';
 
-export async function useCreatedWalls(fcl: any) {
+export async function createdWalls(fcl: any) {
   return await fcl.query({
     cadence: `
       import FlowWall from 0xf3fcd2c1a78f5eee
@@ -12,7 +12,7 @@ export async function useCreatedWalls(fcl: any) {
   });
 }
 
-export async function useWallHeader(fcl: any, account: string) {
+export async function wallHeader(fcl: any, account: string) {
   return await fcl.query({
     cadence: `
       import FlowWall from 0xf3fcd2c1a78f5eee
@@ -53,7 +53,7 @@ export async function useCanvas(fcl: any, account: string) {
   });
 }
 
-export async function useWallExists(fcl: any, user: any, wall?: string) {
+export async function wallExists(fcl: any, user: any, wall?: string) {
   if (!user.loggedIn && !wall) {
     return false;
   }

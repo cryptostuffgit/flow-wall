@@ -1,16 +1,16 @@
 import { useEffect, useState, useContext } from 'react';
 import UserContext from '@/utils/UserContext';
-import { useWallHeader } from '@/utils/transactions';
+import { wallHeader } from '@/utils/transactions';
 import * as fcl from '@onflow/fcl';
 
-const Profile = ({ address, setUserAddress, setPage }) => {
+const Profile = ({ address, setPage }) => {
   const [header, setHeader] = useState<any>({});
 
   const { setSearchAddress } = useContext(UserContext);
 
   useEffect(() => {
     (async () => {
-      const headerData = await useWallHeader(fcl, address);
+      const headerData = await wallHeader(fcl, address);
       setHeader(headerData);
     })();
   }, []);
@@ -22,7 +22,7 @@ const Profile = ({ address, setUserAddress, setPage }) => {
 
   return (
     <div onClick={onClick} className="wall card">
-      {address}'s Wall
+      {address + "'"}s Wall
       {header && (
         <>
           <div>{header.avatar}</div>

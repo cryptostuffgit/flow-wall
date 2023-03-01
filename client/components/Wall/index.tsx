@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useContext } from 'react';
 import * as fcl from '@onflow/fcl';
-import { postWall, getWall, useWallExists } from '../../utils/transactions';
+import { postWall, getWall, wallExists } from '../../utils/transactions';
 import TextInput from '../TextInput';
 import MessageView from '../Message';
 import WallAdmin from '@/components/WallAdmin';
@@ -25,7 +25,7 @@ const Wall = () => {
   const [wall, setWall] = useState<Wall | any>({});
   const [refresh, causeRefresh] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [wallExists, setWallExists] = useState([false, false]);
+  const [wallBools, setWallExists] = useState([false, false]);
 
   const { user, searchAddress } = useContext(UserContext);
 
@@ -34,15 +34,15 @@ const Wall = () => {
   useEffect(() => {
     (async () => {
       setWallExists([false, false]);
-      await setWallExists(await useWallExists(fcl, user, address));
+      await setWallExists(await wallExists(fcl, user, address));
     })();
   }, [address, refresh]);
 
   const isYou = user.addr === address;
-  const admin = isYou && wallExists[0];
+  const admin = isYou && wallBools[0];
 
   useEffect(() => {
-    if (wallExists[0]) {
+    if (wallBools[0]) {
       (async () => {
         const fcl_wall = await getWall(fcl, address);
         setWall(fcl_wall);
@@ -51,7 +51,7 @@ const Wall = () => {
         setMessages(fcl_messages);
       })();
     }
-  }, [address, wallExists, refresh]);
+  }, [address, wallBools, refresh]);
 
   const postMessage = (mesageText) => {
     postWall(fcl, mesageText, address).then(() => {
@@ -67,17 +67,17 @@ const Wall = () => {
     <>
       <h1 className={'heading' + (admin ? ' admin' : '')}>
         <p>
-          {isYou && wallExists[0] ? (
+          {isYou && wallBools[0] ? (
             <>Your Wall</>
-          ) : address && wallExists[0] ? (
+          ) : address && wallBools[0] ? (
             <>{address} - Wall</>
-          ) : address && !wallExists[0] ? (
+          ) : address && !wallBools[0] ? (
             <>{address} has no wall!</>
           ) : (
             <>Search for an Address</>
           )}
         </p>
-        {user.addr && isYou && !wallExists[0] ? (
+        {user.addr && isYou && !wallBools[0] ? (
           <CreateWall
             causeRefresh={causeRefresh}
             refresh={refresh}
@@ -85,7 +85,7 @@ const Wall = () => {
             address={address}
             isYou={isYou}
           />
-        ) : user.addr && !isYou && !wallExists[0] ? (
+        ) : user.addr && !isYou && !wallBools[0] ? (
           <CreateWall
             causeRefresh={causeRefresh}
             refresh={refresh}
@@ -96,15 +96,15 @@ const Wall = () => {
         ) : (
           <></>
         )}
-        {wallExists[0] && admin && (
+        {wallBools[0] && admin && (
           <WallAdmin
             causeRefresh={causeRefresh}
             refresh={refresh}
-            needsMigrate={!wallExists[1]}
+            needsMigrate={!wallBools[1]}
           />
         )}
       </h1>
-      {wallExists[0] && (
+      {wallBools[0] && (
         <div className="wall">
           <div className="wall_props">
             <div className="avatar">

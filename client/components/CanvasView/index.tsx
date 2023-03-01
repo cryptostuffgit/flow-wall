@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useContext } from 'react';
-import { useWallExists } from '../../utils/transactions';
+import { wallExists } from '../../utils/transactions';
 import { ToastContainer } from 'react-nextjs-toast';
 import * as fcl from '@onflow/fcl';
 import CreateWall from '../CreateWall';
@@ -12,7 +12,7 @@ const CanvasView = ({ hidden }) => {
 
   useEffect(() => {
     (async () => {
-      setCanvasExists(await useWallExists(fcl, user, searchAddress));
+      setCanvasExists(await wallExists(fcl, user, searchAddress));
     })();
   }, [searchAddress]);
 
@@ -29,7 +29,7 @@ const CanvasView = ({ hidden }) => {
           {isYou && canvasExists[0] ? (
             <>Your Canvas</>
           ) : searchAddress && canvasExists[0] ? (
-            <>{searchAddress}'s Canvas</>
+            <>{searchAddress + "'"}s Canvas</>
           ) : searchAddress && !CanvasView[0] ? (
             <>{searchAddress} has no Canvas!</>
           ) : (
@@ -37,7 +37,13 @@ const CanvasView = ({ hidden }) => {
           )}
         </p>
         {user.addr && isYou && !canvasExists[0] ? (
-          <CreateWall user={user} address={searchAddress} isYou={isYou} />
+          <CreateWall
+            refresh={false}
+            causeRefresh={() => {}}
+            user={user}
+            address={searchAddress}
+            isYou={isYou}
+          />
         ) : (
           <></>
         )}

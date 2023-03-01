@@ -1,19 +1,14 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
 import * as fcl from '@onflow/fcl';
 import { createWall, updateWall } from '../../utils/transactions';
 import TextInput from '../TextInput';
 import MessageView from '../Message';
 import Icon from '../Icon';
+import UserContext from '@/utils/UserContext';
 
-const WallAdmin = ({
-  user,
-  causeRefresh,
-  refresh,
-  address,
-  admin,
-  needsMigrate,
-}) => {
+const WallAdmin = ({ causeRefresh, refresh, needsMigrate }) => {
   const [migrated, setMigrated] = useState(false);
+  const { user } = useContext(UserContext);
 
   const editBio = useCallback(() => {
     (async () => {
@@ -21,7 +16,7 @@ const WallAdmin = ({
       await updateWall(fcl, user, '', bio);
       causeRefresh(!refresh);
     })();
-  }, [admin]);
+  }, []);
 
   const editAvatar = useCallback(() => {
     (async () => {
@@ -29,11 +24,11 @@ const WallAdmin = ({
       await updateWall(fcl, user, avatar, '');
       causeRefresh(!refresh);
     })();
-  }, [admin]);
+  }, []);
 
   const migrate = useCallback(() => {
     (async () => {
-      await createWall(fcl, user);
+      await createWall(fcl);
       setMigrated(true);
     })();
   }, [needsMigrate]);

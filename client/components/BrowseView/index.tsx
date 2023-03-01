@@ -1,18 +1,17 @@
 import React, { useEffect, useState, useCallback, useContext } from 'react';
 import UserContext from '@/utils/UserContext';
-import { useCreatedWalls } from '@/utils/transactions';
+import { createdWalls } from '@/utils/transactions';
 import Profile from '@/components/Profile';
 import * as fcl from '@onflow/fcl';
 
-const BrowseView = ({ hidden }) => {
+const BrowseView = ({ hidden, setPage }) => {
   const [walls, setWalls] = useState<any>({});
 
   const { user, searchAddress } = useContext(UserContext);
 
   useEffect(() => {
     (async () => {
-      const createdWalls = await useCreatedWalls(fcl);
-      setWalls(createdWalls);
+      setWalls(await createdWalls(fcl));
     })();
   }, [searchAddress]);
 
@@ -28,8 +27,8 @@ const BrowseView = ({ hidden }) => {
       </h1>
       <div className="created-walls">
         {walls &&
-          Object.keys(walls).map((wall) => {
-            return <Profile address={wall} />;
+          Object.keys(walls).map((wall, i) => {
+            return <Profile key={i} address={wall} setPage={setPage} />;
           })}
       </div>
     </div>

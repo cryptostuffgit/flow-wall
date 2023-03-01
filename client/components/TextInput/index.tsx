@@ -22,7 +22,7 @@ function TextInput({ onClick }) {
         placeholder="Name"
         name="name"
         id="name"
-        autocomplete="off"
+        autoComplete="off"
       />
       <label htmlFor="name" className="form__label">
         Post

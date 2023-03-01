@@ -5,7 +5,7 @@ import { toast } from 'react-nextjs-toast';
 import UserContext from '@/utils/UserContext';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
 
-function Navbar({ setTheme, page, setPage }) {
+function Navbar({ page, setPage }) {
   const [address, setAddress] = useState('');
   const { user, setSearchAddress } = useContext(UserContext);
 

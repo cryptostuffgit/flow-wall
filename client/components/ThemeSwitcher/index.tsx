@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React, { useState } from 'react';
 import Icon from '../Icon';
 
@@ -5,6 +7,9 @@ function ThemeSwitcher() {
   const [theme, setTheme] = useState('light');
 
   function toggleTheme() {
+    if (document === null) {
+      return;
+    }
     const theme = document.querySelector('body').classList.contains('light')
       ? 'light'
       : 'dark';
