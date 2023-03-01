@@ -17,16 +17,18 @@ export default function Home() {
   const { searchAddress, setSearchAddress } = useContext(UserContext);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const params = new Proxy(new URLSearchParams(window.location.search), {
-        get: (searchParams, prop) => searchParams.get(prop),
-      });
+    setTimeout(() => {
+      if (typeof window !== 'undefined') {
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+          get: (searchParams, prop) => searchParams.get(prop),
+        });
 
-      if (params.page && params.address) {
-        setPage(params.page);
-        setSearchAddress(params.address);
+        if (params.page && params.address) {
+          setPage(params.page);
+          setSearchAddress(params.address);
+        }
       }
-    }
+    }, 200);
   }, []);
 
   if (

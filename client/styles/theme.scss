@@ -72,3 +72,9 @@ $shadowWhite: 0 4px 6px -6px $white !global;
   border-radius: $border-radius;
   background-color: rgba($primary, 0.75);
 }
+
+html,
+body {
+  min-height: 100%;
+  height: fit-content;
+}
