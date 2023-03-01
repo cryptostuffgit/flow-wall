@@ -13,7 +13,7 @@ const Profile = ({ address, setPage }) => {
       const headerData = await wallHeader(fcl, address);
       setHeader(headerData);
     })();
-  }, []);
+  }, [address]);
 
   const onClick = () => {
     setSearchAddress(address);

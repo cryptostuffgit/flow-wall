@@ -36,7 +36,7 @@ const Wall = () => {
       setWallExists([false, false]);
       await setWallExists(await wallExists(fcl, user, address));
     })();
-  }, [address, refresh]);
+  }, [user, address, refresh]);
 
   const isYou = user.addr === address;
   const admin = isYou && wallBools[0];

@@ -13,7 +13,7 @@ const CreateWall = ({ refresh, causeRefresh, user, isYou, address }) => {
         causeRefresh(!refresh);
       })();
     }
-  }, [user]);
+  }, [causeRefresh, refresh, user]);
 
   const createWallOtherCB = useCallback(() => {
     if (user.loggedIn === true) {
@@ -22,7 +22,7 @@ const CreateWall = ({ refresh, causeRefresh, user, isYou, address }) => {
         causeRefresh(!refresh);
       })();
     }
-  }, [user, address]);
+  }, [causeRefresh, refresh, user, address]);
 
   return (
     <>
