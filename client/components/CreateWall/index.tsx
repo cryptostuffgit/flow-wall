@@ -30,8 +30,10 @@ const CreateWall = ({ refresh, causeRefresh, user, isYou, address }) => {
         onClick={() => {
           isYou ? createWallCB() : createWallOtherCB();
         }}
-      >
-        Create Wall
+       className="new">
+        <span className="material-symbols-outlined">
+        new_window
+        </span>
       </button>
     </>
   );

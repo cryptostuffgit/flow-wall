@@ -24,10 +24,12 @@ export default function Home() {
               href="https://fonts.googleapis.com/css?family=Golos+Text:regular,bold,italic&subset=latin,latin-ext"
               rel="stylesheet"
             ></link>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
           </Head>
           <div>
             <Navbar page={page} setPage={setPage} />
-            <div>
+            <div style={{margin: "35px"}}>
               <CanvasView hidden={page !== 'canvas'} />
               <MainView hidden={page !== 'messages'} />
               <BrowseView hidden={page !== 'browse'} setPage={setPage} />
