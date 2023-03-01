@@ -2,6 +2,7 @@
   .created-walls {
     margin-top: 16px;
     display: flex;
+    flex-wrap: wrap;
 
     .wall {
       cursor: pointer;
