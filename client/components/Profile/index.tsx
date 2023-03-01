@@ -26,7 +26,7 @@ const Profile = ({ address, setPage }) => {
 
   const onClick = () => {
     setSearchAddress(address);
-    setPage('messages');
+    setPage('canvas');
   };
 
   return (
