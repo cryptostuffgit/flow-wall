@@ -23,7 +23,7 @@ const CanvasView = ({ hidden }) => {
         setLoading(false);
       }
     })();
-  }, [user, searchAddress]);
+  }, [setLoading, user, searchAddress]);
 
   const isYou = user.addr === searchAddress;
   const isAdmin = isYou && canvasExists[0];

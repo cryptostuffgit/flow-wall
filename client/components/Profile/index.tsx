@@ -22,7 +22,7 @@ const Profile = ({ address, setPage }) => {
         setLoading(false);
       }
     })();
-  }, [address]);
+  }, [setLoading, address]);
 
   const onClick = () => {
     setSearchAddress(address);
