@@ -15,7 +15,7 @@ export async function createdWalls(fcl: any) {
   });
 }
 
-export async function useWallHeader(fcl: any, account: string) {
+export async function wallHeader(fcl: any, account: string) {
   return await fcl.query({
     cadence: `
       import FlowWall from ${envVar}
