@@ -89,9 +89,9 @@ const Wall = () => {
       <h1 className={'heading' + (admin ? ' admin' : '')}>
         <p>
           {isYou && wallBools[0] ? (
-            <>Your Wall</>
+            <>Your Messages</>
           ) : address && wallBools[0] ? (
-            <>{address} - Wall</>
+            <>{address} - Messages</>
           ) : address && !wallBools[0] ? (
             <>{address} has no wall!</>
           ) : (
