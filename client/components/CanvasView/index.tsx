@@ -14,7 +14,7 @@ const CanvasView = ({ hidden }) => {
     (async () => {
       setCanvasExists(await wallExists(fcl, user, searchAddress));
     })();
-  }, [searchAddress]);
+  }, [user, searchAddress]);
 
   const isYou = user.addr === searchAddress;
   const isAdmin = isYou && canvasExists[0];

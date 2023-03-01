@@ -16,7 +16,7 @@ const WallAdmin = ({ causeRefresh, refresh, needsMigrate }) => {
       await updateWall(fcl, user, '', bio);
       causeRefresh(!refresh);
     })();
-  }, []);
+  }, [causeRefresh, refresh, user]);
 
   const editAvatar = useCallback(() => {
     (async () => {
@@ -24,14 +24,14 @@ const WallAdmin = ({ causeRefresh, refresh, needsMigrate }) => {
       await updateWall(fcl, user, avatar, '');
       causeRefresh(!refresh);
     })();
-  }, []);
+  }, [causeRefresh, refresh, user]);
 
   const migrate = useCallback(() => {
     (async () => {
       await createWall(fcl);
       setMigrated(true);
     })();
-  }, [needsMigrate]);
+  }, []);
 
   return (
     <div className="flex">
