@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import UserContext from '@/utils/UserContext';
 import { wallHeader } from '@/utils/transactions';
-import { useEffect, useState } from 'react';
 import * as fcl from '@onflow/fcl';
 import LoadingContext from '@/utils/LoadingContext';
 
