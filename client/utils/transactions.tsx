@@ -1,6 +1,13 @@
 import '../flow/config';
 
+<<<<<<< Updated upstream
 export async function useCreatedWalls(fcl: any) {
+=======
+let envVar = '0x492380dc41f13fde';
+envVar = '0xf3fcd2c1a78f5eee';
+
+export async function createdWalls(fcl: any) {
+>>>>>>> Stashed changes
   return await fcl.query({
     cadence: `
       import FlowWall from 0xf3fcd2c1a78f5eee

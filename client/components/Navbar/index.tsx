@@ -2,9 +2,14 @@ import React from 'react';
 import * as fcl from '@onflow/fcl';
 import { useEffect, useCallback, useState } from 'react';
 import { toast } from 'react-nextjs-toast';
+import UserContext from '@/utils/UserContext';
+import ThemeSwitcher from '@/components/ThemeSwitcher';
+import LoadingContext from '@/utils/LoadingContext';
 
 function Navbar({ user, setUserAddress, page, setPage }) {
   const [address, setAddress] = useState('');
+  const { user, setSearchAddress } = useContext(UserContext);
+  const { setLoading } = useContext(LoadingContext);
 
   const AuthedState = () => {
     return (
@@ -35,6 +40,7 @@ function Navbar({ user, setUserAddress, page, setPage }) {
   const onKeyUp = async (event) => {
     if (event.key === 'Enter' || address.length === 18) {
       try {
+        setLoading(true);
         const account = await fcl.account(address);
         setUserAddress(`0x${account.address}`);
       } catch (e: any) {
@@ -42,7 +48,9 @@ function Navbar({ user, setUserAddress, page, setPage }) {
         toast.notify('Invalid account', {
           type: 'error',
         });
-        setUserAddress(user.addr);
+        setSearchAddress(user.addr);
+      } finally {
+        setLoading(false);
       }
     }
   };
