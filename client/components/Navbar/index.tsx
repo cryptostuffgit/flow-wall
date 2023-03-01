@@ -50,10 +50,20 @@ function Navbar({ page, setPage }) {
     }
   };
 
+  const fetchMyProfile = (event) => {
+    setSearchAddress(user.addr)
+    setPage('canvas')
+  }
+
   return (
     <div className="nav">
       <div>
         <div className="left-side">
+          {user.addr && 
+            <span className="material-symbols-outlined" onClick={fetchMyProfile}>
+              home
+            </span>
+          } 
           <div
             className={page == 'canvas' ? 'selected page' : 'page'}
             onClick={() => setPage('canvas')}
