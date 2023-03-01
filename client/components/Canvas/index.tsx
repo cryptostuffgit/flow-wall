@@ -79,7 +79,7 @@ const Canvas = ({ user, address, admin }) => {
                 {msg.type == 'text' ? (
                   <MessageView user={user} message={msg} />
                 ) : (
-                  <img className="imageDisplay" src={msg.content as string} />
+                  <img className="imageDisplay canvas-item" src={msg.content as string} />
                 )}
               </div>
             );

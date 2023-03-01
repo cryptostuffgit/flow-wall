@@ -3,7 +3,7 @@ import { formatTimestamp } from '@/utils/format';
 
 const MessageView = ({ user, message }) => {
   return (
-    <div className={'message-container-self'}>
+    <div className={'message-container-self canvas-item'}>
       <div className="card message-content">
         <p>{message.content}</p>
 
