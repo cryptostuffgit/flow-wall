@@ -10,7 +10,7 @@ function LoadingProvider(props) {
     if (loading === true) {
       let timeout = setTimeout(() => {
         setStartLoading(true);
-      }, 500);
+      }, 1);
       return () => clearTimeout(timeout);
     } else {
       setStartLoading(false);
