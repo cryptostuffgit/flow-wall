@@ -1,7 +1,7 @@
 import '../flow/config';
 
-const envVar = "0x492380dc41f13fde"
-// 0xf3fcd2c1a78f5eee
+let envVar = '0x492380dc41f13fde';
+envVar = '0xf3fcd2c1a78f5eee';
 
 export async function createdWalls(fcl: any) {
   return await fcl.query({

@@ -5,14 +5,23 @@ import * as fcl from '@onflow/fcl';
 import CreateWall from '../CreateWall';
 import Canvas from '../Canvas';
 import UserContext from '@/utils/UserContext';
+import LoadingContext from '@/utils/LoadingContext';
 
 const CanvasView = ({ hidden }) => {
   const [canvasExists, setCanvasExists] = useState([false, false]);
   const { user, searchAddress } = useContext(UserContext);
+  const { setLoading } = useContext(LoadingContext);
 
   useEffect(() => {
     (async () => {
-      setCanvasExists(await wallExists(fcl, user, searchAddress));
+      try {
+        setLoading(false);
+        setCanvasExists(await wallExists(fcl, user, searchAddress));
+      } catch (e: any) {
+        throw e;
+      } finally {
+        setLoading(false);
+      }
     })();
   }, [user, searchAddress]);
 

@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
 import * as fcl from '@onflow/fcl';
 import { postContent, getWall } from '../../utils/transactions';
 import TextInput from '../TextInput';
 import RadioButton from '../RadioButton';
 import MessageView from '../Message';
+import LoadingContext from '@/utils/LoadingContext';
 
 type CanvasItem = {
   type: String;
@@ -22,25 +23,38 @@ const Canvas = ({ user, address, admin }) => {
   const [canvas, setCanvas] = useState<Canvas | any>({});
   const [content, setContent] = useState<CanvasItem[]>([]);
   const [contentType, setType] = useState('text');
+  const { setLoading } = useContext(LoadingContext);
 
   useEffect(() => {
     (async () => {
-      const fcl_wall = await getWall(fcl, address);
-      setCanvas(fcl_wall);
-      let fcl_content = fcl_wall.canvasItems;
-      fcl_content = fcl_content.sort((a, b) => b.timestamp - a.timestamp);
-      setContent(fcl_content);
+      try {
+        setLoading(true);
+        const fcl_wall = await getWall(fcl, address);
+        setCanvas(fcl_wall);
+        let fcl_content = fcl_wall.canvasItems;
+        fcl_content = fcl_content.sort((a, b) => b.timestamp - a.timestamp);
+        setContent(fcl_content);
+      } catch (e: any) {
+        throw e;
+      } finally {
+        setLoading(false);
+      }
     })();
   }, [address]);
 
   const postContentFun = (mesageText) => {
-    postContent(fcl, mesageText, address, contentType).then(() => {
-      const allContent = [
-        { type: contentType, content: mesageText, timestamp: 'now' },
-        ...content,
-      ];
-      setContent(allContent);
-    });
+    setLoading(true);
+    postContent(fcl, mesageText, address, contentType)
+      .then(() => {
+        const allContent = [
+          { type: contentType, content: mesageText, timestamp: 'now' },
+          ...content,
+        ];
+        setContent(allContent);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const buttonClick = (value) => {

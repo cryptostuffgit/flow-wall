@@ -6,6 +6,7 @@ import MessageView from '../Message';
 import WallAdmin from '@/components/WallAdmin';
 import CreateWall from '@/components/CreateWall';
 import UserContext from '@/utils/UserContext';
+import LoadingContext from '@/utils/LoadingContext';
 
 type Message = {
   sender: String;
@@ -26,6 +27,7 @@ const Wall = () => {
   const [refresh, causeRefresh] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [wallBools, setWallExists] = useState([false, false]);
+  const { setLoading } = useContext(LoadingContext);
 
   const { user, searchAddress } = useContext(UserContext);
 
@@ -33,8 +35,15 @@ const Wall = () => {
 
   useEffect(() => {
     (async () => {
-      setWallExists([false, false]);
-      await setWallExists(await wallExists(fcl, user, address));
+      try {
+        setLoading(true);
+        setWallExists([false, false]);
+        await setWallExists(await wallExists(fcl, user, address));
+      } catch (e: any) {
+        throw e;
+      } finally {
+        setLoading(false);
+      }
     })();
   }, [user, address, refresh]);
 
@@ -44,23 +53,35 @@ const Wall = () => {
   useEffect(() => {
     if (wallBools[0]) {
       (async () => {
-        const fcl_wall = await getWall(fcl, address);
-        setWall(fcl_wall);
-        let fcl_messages = fcl_wall.messages;
-        fcl_messages = fcl_messages.sort((a, b) => b.timestamp - a.timestamp);
-        setMessages(fcl_messages);
+        try {
+          setLoading(true);
+          const fcl_wall = await getWall(fcl, address);
+          setWall(fcl_wall);
+          let fcl_messages = fcl_wall.messages;
+          fcl_messages = fcl_messages.sort((a, b) => b.timestamp - a.timestamp);
+          setMessages(fcl_messages);
+        } catch (e: any) {
+          throw e;
+        } finally {
+          setLoading(false);
+        }
       })();
     }
   }, [address, wallBools, refresh]);
 
   const postMessage = (mesageText) => {
-    postWall(fcl, mesageText, address).then(() => {
-      const allMessages = [
-        { sender: user.addr, content: mesageText, timestamp: 'now' },
-        ...messages,
-      ];
-      setMessages(allMessages);
-    });
+    setLoading(true);
+    postWall(fcl, mesageText, address)
+      .then(() => {
+        const allMessages = [
+          { sender: user.addr, content: mesageText, timestamp: 'now' },
+          ...messages,
+        ];
+        setMessages(allMessages);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (

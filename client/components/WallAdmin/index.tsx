@@ -5,31 +5,54 @@ import TextInput from '../TextInput';
 import MessageView from '../Message';
 import Icon from '../Icon';
 import UserContext from '@/utils/UserContext';
+import LoadingContext from '@/utils/LoadingContext';
 
 const WallAdmin = ({ causeRefresh, refresh, needsMigrate }) => {
   const [migrated, setMigrated] = useState(false);
   const { user } = useContext(UserContext);
+  const { setLoading } = useContext(LoadingContext);
 
   const editBio = useCallback(() => {
     (async () => {
-      const bio = 'b';
-      await updateWall(fcl, user, '', bio);
-      causeRefresh(!refresh);
+      try {
+        setLoading(true);
+        const bio = 'b';
+        await updateWall(fcl, user, '', bio);
+        causeRefresh(!refresh);
+      } catch (e: any) {
+        throw e;
+      } finally {
+        setLoading(false);
+      }
     })();
   }, [causeRefresh, refresh, user]);
 
   const editAvatar = useCallback(() => {
     (async () => {
-      const avatar = 'a';
-      await updateWall(fcl, user, avatar, '');
-      causeRefresh(!refresh);
+      try {
+        setLoading(true);
+        const avatar = 'a';
+        await updateWall(fcl, user, avatar, '');
+        causeRefresh(!refresh);
+      } catch (e: any) {
+        throw e;
+      } finally {
+        setLoading(false);
+      }
     })();
   }, [causeRefresh, refresh, user]);
 
   const migrate = useCallback(() => {
     (async () => {
-      await createWall(fcl);
-      setMigrated(true);
+      try {
+        setLoading(true);
+        await createWall(fcl);
+        setMigrated(true);
+      } catch (e: any) {
+        throw e;
+      } finally {
+        setLoading(false);
+      }
     })();
   }, []);
 

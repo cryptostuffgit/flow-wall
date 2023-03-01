@@ -3,15 +3,24 @@ import UserContext from '@/utils/UserContext';
 import { createdWalls } from '@/utils/transactions';
 import Profile from '@/components/Profile';
 import * as fcl from '@onflow/fcl';
+import LoadingContext from '@/utils/LoadingContext';
 
 const BrowseView = ({ hidden, setPage }) => {
   const [walls, setWalls] = useState<any>({});
+  const { setLoading } = useContext(LoadingContext);
 
   const { user, searchAddress } = useContext(UserContext);
 
   useEffect(() => {
     (async () => {
-      setWalls(await createdWalls(fcl));
+      try {
+        setLoading(true);
+        setWalls(await createdWalls(fcl));
+      } catch (e: any) {
+        throw e;
+      } finally {
+        setLoading(false);
+      }
     })();
   }, [searchAddress]);
 

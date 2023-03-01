@@ -4,10 +4,12 @@ import { useEffect, useCallback, useState, useContext } from 'react';
 import { toast } from 'react-nextjs-toast';
 import UserContext from '@/utils/UserContext';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
+import LoadingContext from '@/utils/LoadingContext';
 
 function Navbar({ page, setPage }) {
   const [address, setAddress] = useState('');
   const { user, setSearchAddress } = useContext(UserContext);
+  const { setLoading } = useContext(LoadingContext);
 
   const AuthedState = () => {
     return (
@@ -38,6 +40,7 @@ function Navbar({ page, setPage }) {
   const onKeyUp = async (event) => {
     if (event.key === 'Enter' || address.length === 18) {
       try {
+        setLoading(true);
         const account = await fcl.account(address);
         setSearchAddress(`0x${account.address}`);
       } catch (e: any) {
@@ -46,6 +49,8 @@ function Navbar({ page, setPage }) {
           type: 'error',
         });
         setSearchAddress(user.addr);
+      } finally {
+        setLoading(false);
       }
     }
   };
