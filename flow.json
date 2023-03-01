@@ -70,13 +70,13 @@
         }
     },
 	"deployments": {
-        "testnet": {
-            "default": ["FlowWall"]
-        },
-        "emulator": {
-            "emulator-account": [
-                "FlowWall"
-            ]
-        }
-    }
+		"testnet": {
+			"default": ["FlowWall"]
+		},
+		"emulator": {
+			"emulator-account": [
+				"FlowWall"
+			]
+		}
+	}
 }
