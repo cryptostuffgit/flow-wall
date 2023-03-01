@@ -25,17 +25,18 @@ const CreateWall = ({ refresh, causeRefresh, user, isYou, address }) => {
   }, [causeRefresh, refresh, user, address]);
 
   return (
-    <>
+    <div className='new-wall-button'>
       <button
         onClick={() => {
           isYou ? createWallCB() : createWallOtherCB();
         }}
-       className="new">
+       className="new-wall"
+       style={{marginLeft: "20px !important"}}>
         <span className="material-symbols-outlined">
         new_window
         </span>
       </button>
-    </>
+    </div>
   );
 };
 
