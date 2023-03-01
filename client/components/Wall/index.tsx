@@ -45,7 +45,7 @@ const Wall = () => {
         setLoading(false);
       }
     })();
-  }, [user, address, refresh]);
+  }, [setLoading, user, address, refresh]);
 
   const isYou = user.addr === address;
   const admin = isYou && wallBools[0];
@@ -67,7 +67,7 @@ const Wall = () => {
         }
       })();
     }
-  }, [address, wallBools, refresh]);
+  }, [setLoading, address, wallBools, refresh]);
 
   const postMessage = (mesageText) => {
     setLoading(true);

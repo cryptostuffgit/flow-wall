@@ -25,7 +25,7 @@ const WallAdmin = ({ causeRefresh, refresh, needsMigrate }) => {
         setLoading(false);
       }
     })();
-  }, [causeRefresh, refresh, user]);
+  }, [setLoading, causeRefresh, refresh, user]);
 
   const editAvatar = useCallback(() => {
     (async () => {
@@ -40,7 +40,7 @@ const WallAdmin = ({ causeRefresh, refresh, needsMigrate }) => {
         setLoading(false);
       }
     })();
-  }, [causeRefresh, refresh, user]);
+  }, [setLoading, causeRefresh, refresh, user]);
 
   const migrate = useCallback(() => {
     (async () => {
@@ -54,7 +54,7 @@ const WallAdmin = ({ causeRefresh, refresh, needsMigrate }) => {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [setLoading]);
 
   return (
     <div className="flex">

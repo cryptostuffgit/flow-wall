@@ -40,7 +40,7 @@ const Canvas = ({ user, address, admin }) => {
         setLoading(false);
       }
     })();
-  }, [address]);
+  }, [setLoading, address]);
 
   const postContentFun = (mesageText) => {
     setLoading(true);

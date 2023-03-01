@@ -22,7 +22,7 @@ const BrowseView = ({ hidden, setPage }) => {
         setLoading(false);
       }
     })();
-  }, [searchAddress]);
+  }, [setLoading, searchAddress]);
 
   return (
     <div
