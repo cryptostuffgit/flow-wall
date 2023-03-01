@@ -22,8 +22,10 @@ export default function Home() {
         get: (searchParams, prop) => searchParams.get(prop),
       });
 
-      setPage(params.page);
-      setSearchAddress(params.address);
+      if (params.page && params.address) {
+        setPage(params.page);
+        setSearchAddress(params.address);
+      }
     }
   }, []);
 
